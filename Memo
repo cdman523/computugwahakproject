@@ -14,3 +14,7 @@ Grass는 지속적으로 성장함
 단 하이에나는 remain 값에 상관 없이 섭취하지만
 Lion은 신선한(remain이 70? 이상인) Carcass만 섭취
 섭취시 remain이 감소
+
+3.동물의 시스템
+health는 hunger가 많이 차 있을 때 천천히 회복
+자신의 속력으로 지정된 speed보다 빠르게 이동하면 hunger가 더 빠르게 감소
