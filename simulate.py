@@ -2,10 +2,11 @@
 import pygame
 from base import World
 from carcass import Carcass
+import random as r
 
 
 class Simulator:
-    SCREEN_H, SCREEN_W = 800, 600
+    SCREEN_H, SCREEN_W = 1200, 750
 
     def __init__(self):
         pygame.init()
@@ -13,7 +14,9 @@ class Simulator:
         self.running = False
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
-        self.world.entity_map[Carcass(10)] = pygame.Vector2(40, 80)
+        self.world.entity_map[Carcass(10, pygame.Vector2(0, 100))] = pygame.Vector2(
+            0, 100
+        )
 
     def run(self):
         self.running = True
@@ -34,7 +37,13 @@ class Simulator:
                 self.running = False
 
     def draw_background(self):
-        self.screen.blit(pygame.image.load("images/background.png"), (0, 0))
+        self.screen.blit(
+            pygame.transform.scale(
+                pygame.image.load("images/background.png"),
+                (self.SCREEN_H, self.SCREEN_W),
+            ),
+            (0, 0),
+        )
 
     def draw_entities(self):
         for e, loc in self.world.entity_map.items():

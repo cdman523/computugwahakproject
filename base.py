@@ -81,6 +81,9 @@ class Animal(Entity):
     def move(self):
         pass
 
+    def dead(self):
+        pass
+
 
 class Grass:
     def __init__(self, remain):
