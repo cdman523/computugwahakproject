@@ -78,8 +78,9 @@ class Animal(Entity):
         self.sight = sight
         self.pos = pos
 
-    def move(self):
-        pass
+    def move(self, goto: pygame.Vector2):
+        self.pos = goto
+        return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):
         pass
