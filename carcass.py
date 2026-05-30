@@ -1,4 +1,5 @@
 from base import Entity, Behaves, World
+import pygame
 
 
 class Carcass(Entity):
@@ -6,19 +7,22 @@ class Carcass(Entity):
         self.remain = remain
 
     def habit(self) -> list["Behaves"]:
-        return [Rot()]
+        return [Rot(self)]
+
+    def surface(self):
+        return pygame.image.load("images/images.jpeg")
 
 
 class Rot(Behaves):
-    ROT_VELOCITY = 10
+    ROT_VELOCITY = 0
 
-    def act(self, entity: Entity, world: World) -> bool:
-        if not isinstance(entity, Carcass):
-            return False
+    def __init__(self, carcass: Carcass):
+        self.carcass = carcass
 
-        if entity.remain <= 0:
-            world.remove(entity)
+    def act(self, world: World) -> bool:
+        if self.carcass.remain <= 0:
+            world.remove(self.carcass)
         else:
-            entity.remain -= self.ROT_VELOCITY
+            self.carcass.remain -= self.ROT_VELOCITY
 
         return True

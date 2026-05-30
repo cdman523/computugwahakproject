@@ -18,3 +18,25 @@ Lion은 신선한(remain이 70? 이상인) Carcass만 섭취
 3.동물의 시스템
 health는 hunger가 많이 차 있을 때 천천히 회복
 자신의 속력으로 지정된 speed보다 빠르게 이동하면 hunger가 더 빠르게 감소
+
+
+main.py
+실제로 돌아가는 파일
+
+base.py
+부모 클래스들이 있는 파일
+
+animals.py
+동물 클래스를 구현하는 파일
+
+carcass.py
+시체를 구현하는 파일
+
+simulate.py
+시뮬레이터 돌리는 파일
+
+behaves.py
+행동패턴 작성 파일
+
+Memo
+메모할거 적어놓기
