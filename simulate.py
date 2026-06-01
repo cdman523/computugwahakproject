@@ -14,9 +14,7 @@ class Simulator:
         self.running = False
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
-        self.world.entity_map[Carcass(10, pygame.Vector2(0, 100))] = pygame.Vector2(
-            0, 100
-        )
+        self.world.summon(Carcass, pygame.Vector2(40, 100))
 
     def run(self):
         self.running = True

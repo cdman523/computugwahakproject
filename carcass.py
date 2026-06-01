@@ -7,6 +7,10 @@ class Carcass(Entity):
         self.remain = remain
         self.pos = pos
 
+    @classmethod
+    def info(cls):
+        return (100,)
+
     def habit(self) -> list["Behaves"]:
         return [Rot(self)]
 

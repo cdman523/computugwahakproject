@@ -51,3 +51,10 @@ images 폴더
 추가 메서드
 surface
 시뮬레이팅 중 이미지 생성
+
+info
+해당 생물의 pos 제외한 특징 반환
+@classmethod
+def info(cls):
+    return (대충 특성 리스트)
+로 작성하기

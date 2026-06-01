@@ -28,6 +28,10 @@ class World:
     def entities(self) -> list[Entity]:
         return list(self.entity_map.keys())
 
+    def summon(self, entity, pos):
+        ett = entity(*entity.info(), pos)
+        self.entity_map[ett] = pos
+
     def update(self):
         for entity in self.entities:
             for a in entity.habit():
