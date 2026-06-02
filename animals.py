@@ -1,5 +1,5 @@
 from base import Animal
-from pygame import Vector2
+import pygame
 from behaves import *
 
 
@@ -26,9 +26,10 @@ class Buffalo(Animal):
 class Gazelle(Animal):
     def habit(self):
         return [GAZELLE_MOVE_TO_GAZELLE(self)]
-    
+
 class hyena(Animal):
     def habit(self):
         return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self)]
+
     def info(self):
-        return 
+        return
