@@ -29,7 +29,7 @@ class World:
         return list(self.entity_map.keys())
 
     def summon(self, entity, pos):
-        ett = entity(*entity.info(), pos)
+        ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = pos
 
     def update(self):
@@ -72,6 +72,7 @@ class Animal(Entity):
         speed,
         sight: float,
         pos: pygame.Vector2,
+        world,
     ):
         self.name = name
         self.hp = hp
@@ -81,13 +82,50 @@ class Animal(Entity):
         self.speed = speed
         self.sight = sight
         self.pos = pos
+        self.world = world
 
     def move(self, goto: pygame.Vector2):
         self.pos = goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):
-        pass
+        self.world.summon(Carcass, self.pos)
+        self.world.remove(self)
+
+
+class Carcass(Entity):
+    def __init__(self, remain: float, pos: "pygame.Vector2", world):
+        self.remain = remain
+        self.pos = pos
+
+    @classmethod
+    def info(cls):
+        return (10,)
+
+    def habit(self) -> list["Behaves"]:
+        return [Rot(self)]
+
+    def surface(self):
+        sf = pygame.transform.scale(
+            pygame.image.load("images/testimage0.png"), (60, 60)
+        )
+        sf.set_alpha(int(self.remain * 255 / 10))
+        return sf
+
+
+class Rot(Behaves):
+    ROT_VELOCITY = 0.05
+
+    def __init__(self, carcass: Carcass):
+        self.carcass = carcass
+
+    def act(self, world: World) -> bool:
+        if self.carcass.remain <= 0:
+            world.remove(self.carcass)
+        else:
+            self.carcass.remain -= self.ROT_VELOCITY
+
+        return True
 
 
 class Grass:
