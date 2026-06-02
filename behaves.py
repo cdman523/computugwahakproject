@@ -59,10 +59,29 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             self.actor.pos += direction * speed
 
 
-class Attack_target([gazelle,zebra]):
-    def __init__(self, predator: Animal, prey: Animal):
-        self.predator=predator
-        self.prey=prey
+class ATTACK_TARGET(Behaves):
+    def __init__(self, predator: Animal, target_types: list):
+        self.predator = predator
+        self.target_types = tuple(target_types)
 
-    def act(self, world: World)
-        s
+    def act(self, world: World):
+        # 기획 조건: 배가 부르면 사냥하지 않고 쉼
+        if self.predator.hunger > self.predator.max_hunger * 0.8:
+            return False
+            
+        target = world.findnearesttarget(self.predator, self.target_types, findrange=self.predator.sight)
+        if target and isinstance(target, Animal):
+            # 코끼리가 근처에 있으면 접근 금지 조건 우회
+            from animals import Elephant
+            if world.findnearesttarget(self.predator, Elephant, findrange=80):
+                return False
+
+            if self.predator.pos.distance_to(target.pos) > 15:
+                # 사냥할 때는 원래 속도보다 빠르게 뜀
+                self.predator.move(self.predator.speed * 1.3, target.pos)
+            else:
+                # 공격 연산
+                damage = max(1, self.predator.attack - target.defense)
+                target.hp -= damage
+            return True
+        return False
