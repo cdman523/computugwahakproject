@@ -1,5 +1,4 @@
 from base import Behaves, Animal, Entity, World
-from animals import *
 from pygame import Vector2
 
 
@@ -28,7 +27,6 @@ class EXAMPLE_WALK(Behaves):
         self.walker.pos += Vector2(4, 4)
         return True
 
-
 # 예시3-HELLO는 언제나 할 수 있다
 class EXAMPLE_HELLO(Behaves):
     def __init__(self, hellower):
@@ -47,7 +45,7 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
         target = None
         min_dist = float("inf")
         for entity in getattr(world, "entities", []):
-            if isinstance(entity, Buffalo) and entity is not self.actor:
+            if entity.__class__.__name__ == "Buffalo" and entity is not self.actor:
                 dist = self.actor.pos.distance_to(entity.pos)
                 if dist < min_dist:
                     min_dist = dist
@@ -59,3 +57,13 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             direction = direction.normalize()
             speed = getattr(self.actor, "speed", 2)
             self.actor.pos += direction * speed
+        return True
+
+
+class Attack_target([gazelle,zebra]):
+    def __init__(self, predator: Animal, prey: Animal):
+        self.predator=predator
+        self.prey=prey
+
+    def act(self, world: World)
+        s
