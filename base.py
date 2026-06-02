@@ -84,7 +84,10 @@ class Animal(Entity):
         self.pos = pos
         self.world = world
 
-    def move(self, goto: pygame.Vector2):
+    def move(self, speed, goto: pygame.Vector2):
+        self.pos = goto
+        if speed > self.speed:
+            self.hunger -= 0.05
         self.pos = goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
