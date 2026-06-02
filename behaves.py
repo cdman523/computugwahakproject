@@ -36,3 +36,25 @@ class EXAMPLE_HELLO(Behaves):
     def act(self, world: World):
         print("hello!!!!!!!!!!!!!")
         return True
+
+
+class BUFFALO_MOVE_TO_BUFFALO(Behaves):
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World):
+        target = None
+        min_dist = float('inf')
+        for entity in getattr(world, 'entities', []):
+            if isinstance(entity, Buffalo) and entity is not self.actor:
+                dist = self.actor.pos.distance_to(entity.pos)
+                if dist < min_dist:
+                    min_dist = dist
+                    target = entity
+        if target is None:
+            return False
+        direction = target.pos - self.actor.pos
+        if direction.length() > 0:
+            direction = direction.normalize()
+        speed = getattr(self.actor, 'speed', 2)
+            self.actor.pos += direction * speed
