@@ -27,6 +27,7 @@ class EXAMPLE_WALK(Behaves):
         self.walker.pos += Vector2(4, 4)
         return True
 
+
 # 예시3-HELLO는 언제나 할 수 있다
 class EXAMPLE_HELLO(Behaves):
     def __init__(self, hellower):
@@ -60,10 +61,10 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
         return True
 
 
-class Attack_target([gazelle,zebra]):
+class Attack_target(Behaves):
     def __init__(self, predator: Animal, prey: Animal):
-        self.predator=predator
-        self.prey=prey
+        self.predator = predator
+        self.prey = prey
 
-    def act(self, world: World)
-        s
+    def act(self, world: World):
+        pass

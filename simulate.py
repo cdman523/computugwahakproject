@@ -16,10 +16,10 @@ class Simulator:
         self.running = False
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
-        # self.world.summon(
-        #    ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
-        #    pygame.Vector2(40, 100),
-        # )
+        self.world.summon(
+            ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
+            pygame.Vector2(40, 100),
+        )
 
     def run(self):
         self.running = True
