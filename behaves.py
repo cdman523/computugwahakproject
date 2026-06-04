@@ -191,3 +191,64 @@ class LION_HUNT_PACK(Behaves):
                     target.dead()
 
         return True
+class ZEBRA_ALERT(Behaves):
+    """
+    시력이 좋은 얼룩말이 포식자(Lion, Hyena)를 먼저 발견하면
+    감지 범위 내 Gazelle에게도 도주 신호를 전달한다.
+    - 포식자가 없으면 False.
+    - 있으면 자신과 근처 Gazelle 모두 RUNAWAY 실행.
+    """
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World) -> bool:
+        from animals import Lion, Hyena, Gazelle
+        predator = world.findnearesttarget(
+            self.actor, (Lion, Hyena), findrange=self.actor.sight
+        )
+        if predator is None:
+            return False
+
+        # 근처 가젤에게 도주 신호 전파
+        nearby_gazelles = world.findtarget(
+            self.actor, (Gazelle,), findrange=self.actor.sight
+        )
+        for gazelle in nearby_gazelles:
+            RUNAWAY(gazelle).act(world)
+
+        RUNAWAY(self.actor).act(world)
+        return True
+
+
+class RUNAWAY(Behaves):
+    """
+    포식자로부터 도망치되, 코끼리 근처로 이동하여 생존율을 높인다.
+    - 감지 범위 내 포식자가 없으면 False.
+    - Elephant가 감지 범위 내에 있으면 코끼리 방향으로 이동.
+    - 없으면 포식자 반대 방향으로 한 스텝 이동.
+    """
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World) -> bool:
+        from animals import Lion, Hyena, Elephant
+        predator = world.findnearesttarget(
+            self.actor, (Lion, Hyena), findrange=self.actor.sight
+        )
+        if predator is None:
+            return False
+
+        elephant = world.findnearesttarget(
+            self.actor, (Elephant,), findrange=self.actor.sight
+        )
+
+        if elephant is not None:
+            self.actor.move(self.actor.speed, elephant.pos)
+        else:
+            # 포식자 반대 방향으로 한 스텝 — move()가 방향+거리 계산하므로
+            # 현재 pos에서 충분히 먼 반대 지점을 목표로 넘긴다
+            away = self.actor.pos + (self.actor.pos - predator.pos).normalize() * 9999
+            self.actor.move(self.actor.speed, away)
+
+        return True
+
