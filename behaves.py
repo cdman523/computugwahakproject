@@ -1,7 +1,7 @@
 from base import Behaves, Animal, Entity, World, Carcass
 from animals import *
 from pygame import Vector2
-
+from random import randint
 
 # 예시 코드
 # 예시1-JUMP는 speed가 10 이상, 배고픔이 10 이상이여야 할 수 있고, 실행시 pos를 +val,+val한다
@@ -14,7 +14,7 @@ class EXAMPLE_JUMPING(Behaves):
     def act(self, world: World):
         if self.jumper.speed < 10 or self.jumper.hunger < 10:
             return False
-        self.jumper.pos += Vector2(self.val, self.val)
+        self.jumper.pos += Vector2(self.val+randint(-5,5), self.val+randint(-5,5))
         return True
 
 
