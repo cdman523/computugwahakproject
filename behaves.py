@@ -1,4 +1,5 @@
 from base import Behaves, Animal, Entity, World, Carcass
+from animals import *
 from pygame import Vector2
 
 
