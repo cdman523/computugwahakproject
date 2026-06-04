@@ -150,3 +150,44 @@ class LION_REST(Behaves):
         if self.actor.hunger < self.actor.MAX_HUNGER * 0.8:
             return False
         return True  # 배부름 → 휴식, 사냥 차단
+class LION_HUNT_PACK(Behaves):
+    """
+    Buffalo는 체력·방어력이 높아 무리 사냥이 필요하다.
+    - 감지 범위 내 Buffalo를 발견하면 근처 사자들을 소집해 함께 이동한다.
+    - 자신 포함 MIN_LIONS 마리 이상 모이면 공격까지 수행한다.
+    - Buffalo가 없으면 False → ATTACK_TARGET으로 넘어감.
+    """
+    MIN_LIONS = 2
+
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World) -> bool:
+        from animals import Buffalo
+        target = world.findnearesttarget(
+            self.actor, (Buffalo,), findrange=self.actor.sight
+        )
+        if target is None:
+            return False
+
+        # 근처 사자들을 Buffalo 방향으로 소집
+        nearby_lions = [
+            e for e in world.entities
+            if e.__class__.__name__ == "Lion"
+            and e is not self.actor
+            and self.actor.pos.distance_to(e.pos) <= self.actor.sight
+        ]
+        for lion in nearby_lions:
+            lion.move(lion.speed, target.pos)
+
+        self.actor.move(self.actor.speed, target.pos)
+
+        # 충분히 모였으면 공격
+        if len(nearby_lions) + 1 >= self.MIN_LIONS:
+            if self.actor.pos.distance_to(target.pos) <= 15:
+                damage = max(1, self.actor.attack - target.defense)
+                target.hp -= damage
+                if target.hp <= 0:
+                    target.dead()
+
+        return True
