@@ -44,11 +44,13 @@ class Simulator:
                         ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
                         pygame.Vector2(pygame.mouse.get_pos()),
                     )
+                elif event.key==pygame.K_2:
+                    pass
 
     def draw_background(self):
         self.screen.blit(
             pygame.transform.scale(
-                pygame.image.load("images/bg1.png"),
+                pygame.image.load("images/bg0.png"),
                 (self.SCREEN_H, self.SCREEN_W),
             ),
             (0, 0),

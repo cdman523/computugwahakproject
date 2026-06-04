@@ -24,7 +24,7 @@ class World:
     def __init__(self):
         self.entity_map: dict["Entity", pygame.Vector2] = dict()
         self.grass_map = [
-            [Grass(r.randint(70, 100)) for _ in range(10)] for _ in range(10)
+            [Grass(r.randint(70, 100)) for _ in range(16)] for _ in range(10)
         ]
 
     @property
@@ -57,6 +57,9 @@ class World:
         if len(targets) == 0:
             return None
         return min(targets, key=lambda aa: aa.pos.distance_to(entity.pos))
+    
+    def wheregrass(self,entity):
+        return (entity.pos.x//75,entity.pos.y//75)
 
 
 class Behaves(ABC):
@@ -65,6 +68,7 @@ class Behaves(ABC):
 
 
 class Animal(Entity):
+    MAXHUNGER=50
     def __init__(
         self,
         name,
@@ -86,6 +90,14 @@ class Animal(Entity):
         self.sight = sight
         self.pos = pos
         self.world = world
+        
+    @property
+    def hunger(self):
+        return self._hunger
+    @hunger.setter
+    def hunger(self,v):
+        self._hunger=v if v<=self.MAXHUNGER else self.MAXHUNGER
+
 
     def move(self, speed, goto: pygame.Vector2):
         self.pos = goto

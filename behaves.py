@@ -86,3 +86,14 @@ class ATTACK_TARGET(Behaves):
                 target.hp -= damage
             return True
         return False
+
+class EAT_GRASS(Behaves):
+    def __init__(self,eater):
+        self.eater=eater
+    def act(self,world:World):
+        grassx,grassy=world.wheregrass(self.eater)
+        if world.grass_map[grassy][grassx]<=10 or self.eater.hunger>35:
+            return False
+        self.eater.hunger+=1
+        world.grass_map[grassy][grassx]-=5
+        return True
