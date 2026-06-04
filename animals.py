@@ -8,7 +8,7 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
     Animal
 ):
     def habit(self):
-        return [EXAMPLE_JUMPING(self, 0), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
+        return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
 
     def surface(self):
         return pygame.transform.scale(pygame.image.load("images/lion0.png"), (60, 60))

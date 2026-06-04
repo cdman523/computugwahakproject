@@ -50,7 +50,7 @@ class Simulator:
     def draw_background(self):
         self.screen.blit(
             pygame.transform.scale(
-                pygame.image.load("images/gbg.png"),
+                pygame.image.load("images/gbg0.png"),
                 (self.SCREEN_H, self.SCREEN_W),
             ),
             (0, 0),
