@@ -1,9 +1,10 @@
-from base import Behaves, Animal, Entity, World
+from base import Behaves, Animal, Entity, World, Carcass
 from pygame import Vector2
 
 
 # 예시 코드
 # 예시1-JUMP는 speed가 10 이상, 배고픔이 10 이상이여야 할 수 있고, 실행시 pos를 +val,+val한다
+
 class EXAMPLE_JUMPING(Behaves):
     def __init__(self, jumper: Animal, val):
         self.val = val
@@ -66,22 +67,18 @@ class ATTACK_TARGET(Behaves):
         self.target_types = tuple(target_types)
 
     def act(self, world: World):
-        # 기획 조건: 배가 부르면 사냥하지 않고 쉼
-        if self.predator.hunger > self.predator.max_hunger * 0.8:
+        if self.predator.hunger > self.predator.MAXHUNGER * 0.8:
             return False
             
         target = world.findnearesttarget(self.predator, self.target_types, findrange=self.predator.sight)
         if target and isinstance(target, Animal):
-            # 코끼리가 근처에 있으면 접근 금지 조건 우회
             from animals import Elephant
             if world.findnearesttarget(self.predator, Elephant, findrange=80):
                 return False
 
             if self.predator.pos.distance_to(target.pos) > 15:
-                # 사냥할 때는 원래 속도보다 빠르게 뜀
                 self.predator.move(self.predator.speed * 1.3, target.pos)
             else:
-                # 공격 연산
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
             return True
@@ -97,3 +94,26 @@ class EAT_GRASS(Behaves):
         self.eater.hunger+=1
         world.grass_map[grassy][grassx]-=5
         return True
+
+class EAT_CARCASS(Behaves):
+    def __init__(self, actor: Animal):
+        self.actor=actor
+
+    def act(self, world: World):
+        if self.actor.hunger > self.actor.MAXHUNGER * 0.7:
+            return False
+        
+        target = world. findnearesttarget(self.actor, Carcass, findrange=self.actor.sight)
+        if target:
+            from animals import Lion
+#사자는 신선한 많이 남은 시체만 먹음. 하이에나는 남은 양 무관.
+            if isinstance(self.actor, Lion) and target.remain < 70:
+                return False
+        #시체 근처로 이동 후 섭취
+            if self.actor.pos.distance_to(target.pos) > 10:
+                self.actor.move(self.actor.speed,target.pos)
+            else:
+                target.remain-=5
+                self.actor.hunger=min(self.actor.MAXHUNGER, self.actor.hunger + 10)
+            return True
+        return False

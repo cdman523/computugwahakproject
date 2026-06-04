@@ -22,14 +22,38 @@ class Buffalo(Animal):
     def habit(self):
         return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self)]
 
+    def surface(self):
+        pass
+
+    def info(self):
+        pass
 
 class Gazelle(Animal):
     def habit(self):
         return [GAZELLE_MOVE_TO_GAZELLE(self)]
 
-class hyena(Animal):
-    def habit(self):
-        return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self)]
+    def surface(self):
+        pass
 
     def info(self):
-        return
+        pass
+
+class Hyena(Animal):
+    def habit(self):
+        return [ATTACK_TARGET(self), EAT_CARCASS(self)]
+    
+    def surface(self):
+        pass
+
+    def info(self):
+        pass
+
+class Lion(Animal):
+    def habit(self):
+        return [ATTACK_TARGET(self), EAT_CARCASS(self)]
+    
+    def surface(self):
+        pass
+
+    def info(self):
+        pass
