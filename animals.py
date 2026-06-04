@@ -33,3 +33,18 @@ class hyena(Animal):
 
     def info(self):
         return
+
+class LION_REST(Behaves):
+    """
+    배가 부른 사자는 초식동물이 곁을 지나가도 사냥하지 않고 휴식한다.
+    hunger가 max_hunger의 80% 이상이면 아무것도 하지 않고 True 반환.
+    (ATTACK_TARGET보다 habit 리스트 앞에 두어 사냥을 막는다)
+    """
+    def __init__(self, actor: Animal):
+        self.actor = actor
+ 
+    def act(self, world: World):
+        if self.actor.hunger < self.actor.max_hunger * 0.8:
+            return False  # 배고프면 휴식 불가 → 다음 행동으로 넘김
+        # 배부름 → 제자리 대기
+        return True
