@@ -138,3 +138,15 @@ class LION_GUARD_CARCASS(Behaves):
         if self.actor.pos.distance_to(carcass.pos) > self.GUARD_RANGE:
             self.actor.move(self.actor.speed, carcass.pos)
         return True
+class LION_REST(Behaves):
+    """
+    배가 부른 사자는 초식동물이 곁을 지나가도 사냥하지 않고 휴식한다.
+    hunger가 MAX_HUNGER의 80% 이상이면 True를 반환하여 뒤 행동을 막는다.
+    """
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World) -> bool:
+        if self.actor.hunger < self.actor.MAX_HUNGER * 0.8:
+            return False
+        return True  # 배부름 → 휴식, 사냥 차단
