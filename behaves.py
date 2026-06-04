@@ -117,3 +117,24 @@ class EAT_CARCASS(Behaves):
                 self.actor.hunger=min(self.actor.MAXHUNGER, self.actor.hunger + 10)
             return True
         return False
+class LION_GUARD_CARCASS(Behaves):
+    """
+    사냥한 시체 주변에 머물러 하이에나 접근을 막는다.
+    - 감지 범위 내 Carcass가 있으면 그 쪽으로 이동하며 자리를 지킨다.
+    - 시체가 없으면 False → 다음 행동으로 넘어감.
+    """
+    GUARD_RANGE = 30
+
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World) -> bool:
+        carcass = world.findnearesttarget(
+            self.actor, (Carcass,), findrange=self.actor.sight
+        )
+        if carcass is None:
+            return False
+
+        if self.actor.pos.distance_to(carcass.pos) > self.GUARD_RANGE:
+            self.actor.move(self.actor.speed, carcass.pos)
+        return True
