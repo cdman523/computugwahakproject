@@ -49,7 +49,6 @@ class Hyena(Animal):
         pass
 
 class Lion(Animal):
-    MAX_HUNGER = 100
 
     @classmethod
     def info(cls):
@@ -72,7 +71,6 @@ class Lion(Animal):
 
 class Zebra(Animal):
 
-    MAX_HUNGER = 100
 
     @classmethod
     def info(cls):
