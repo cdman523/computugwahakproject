@@ -103,7 +103,7 @@ class Animal(Entity):
         self.pos = goto
         if speed > self.speed:
             self.hunger -= 0.05
-        self.pos = goto
+        self.world.entity_map[self]=goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):

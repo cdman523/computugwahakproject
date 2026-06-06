@@ -13,7 +13,7 @@ class EXAMPLE_JUMPING(Behaves):
     def act(self, world: World):
         if self.jumper.speed < 10 or self.jumper.hunger < 10:
             return False
-        self.jumper.pos += Vector2(self.val, self.val)
+        self.jumper.move(20,self.jumper.pos+Vector2(self.val,self.val))
         return True
 
 
@@ -25,7 +25,7 @@ class EXAMPLE_WALK(Behaves):
     def act(self, world: World):
         if self.walker.hunger < 4:
             return False
-        self.walker.pos += Vector2(4, 4)
+        self.walker.move(15,self.walker.pos+Vector2(4,4))
         return True
 
 
@@ -58,7 +58,7 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
         if direction.length() > 0:
             direction = direction.normalize()
             speed = getattr(self.actor, "speed", 2)
-            self.actor.pos += direction * speed
+            self.actor.move(speed,self.actor.pos+direction*speed)
         return True
 
 class ATTACK_TARGET(Behaves):

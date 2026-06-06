@@ -15,7 +15,7 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
 
     @classmethod
     def info(cls):
-        return ("대서우", 10, 10, 10, 10, 10, 10)
+        return ("대서우", 10,10,10,20,10,10)
 
 
 class Buffalo(Animal):
