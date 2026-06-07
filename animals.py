@@ -11,7 +11,7 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
         return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
 
     def surface(self):
-        return pygame.transform.scale(pygame.image.load("images/zebra.png"), (60, 60))
+        return pygame.transform.scale(pygame.image.load("images/bufalo.png"), (60, 60))
 
     @classmethod
     def info(cls):
@@ -19,13 +19,19 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
 
 
 class Buffalo(Animal):
+    ENUM=0
+
     def habit(self):
         return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self)]
 
     def surface(self):
-        pass
+        return pygame.transform.scale(
+            pygame.image.load("images/bufalo.png"), (60, 60)
+        )
 
-    def info(self):
+    @classmethod
+    def info(cls):
+        cls.ENUM+=1
         pass
 
 class Gazelle(Animal):
@@ -33,9 +39,13 @@ class Gazelle(Animal):
         return [GAZELLE_MOVE_TO_GAZELLE(self)]
 
     def surface(self):
-        pass
+        return pygame.transform.scale(
+            pygame.image.load("images/gazel.png"), (60, 60)
+        )
 
-    def info(self):
+    @classmethod
+    def info(cls):
+        cls.ENUM+=1
         pass
 
 class Hyena(Animal):
@@ -43,13 +53,18 @@ class Hyena(Animal):
         return [ATTACK_TARGET(self), EAT_CARCASS(self)]
     
     def surface(self):
-        pass
-
-    def info(self):
+        return pygame.transform.scale(
+            pygame.image.load("images/hyena.png"), (60, 60)
+        )
+    
+    @classmethod
+    def info(cls):
+        cls.ENUM+=1
         pass
 
 class Lion(Animal):
     ENUM=0
+
     @classmethod
     def info(cls):
         # (name, hp, attack, defense, hunger, speed, sight)
@@ -72,6 +87,7 @@ class Lion(Animal):
 
 class Zebra(Animal):
     ENUM=0
+
     @classmethod
     def info(cls):
         return (f"Zebra{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
