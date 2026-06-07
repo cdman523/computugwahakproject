@@ -49,11 +49,12 @@ class Hyena(Animal):
         pass
 
 class Lion(Animal):
-
+    ENUM=0
     @classmethod
     def info(cls):
         # (name, hp, attack, defense, hunger, speed, sight)
-        return ("Lion", 200, 40, 10, 80, 4, 150)
+        cls.ENUM+=1
+        return (f"Lion{cls.ENUM}", 200, 40, 10, 80, 4, 150)
 
     def habit(self):
         return [
@@ -70,11 +71,10 @@ class Lion(Animal):
 
 
 class Zebra(Animal):
-
-
+    ENUM=0
     @classmethod
     def info(cls):
-        return ("Zebra", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
+        return (f"Zebra{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
 
     def habit(self):
         return [
