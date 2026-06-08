@@ -34,7 +34,7 @@ class Buffalo(Animal):
     @classmethod
     def info(cls):
         cls.ENUM+=1
-        pass
+        return (f'버팔로{cls.ENUM}',)
 
 class Gazelle(Animal):
     def habit(self):
@@ -48,7 +48,7 @@ class Gazelle(Animal):
     @classmethod
     def info(cls):
         cls.ENUM+=1
-        pass
+        return (f'가젤{cls.ENUM}',)
 
 class Hyena(Animal):
     def habit(self):
@@ -62,7 +62,7 @@ class Hyena(Animal):
     @classmethod
     def info(cls):
         cls.ENUM+=1
-        pass
+        return (f'하이에나{cls.ENUM}',)
 
 class Lion(Animal):
     ENUM=0
@@ -71,7 +71,7 @@ class Lion(Animal):
     def info(cls):
         # (name, hp, attack, defense, hunger, speed, sight)
         cls.ENUM+=1
-        return (f"Lion{cls.ENUM}", 200, 40, 10, 80, 4, 150)
+        return (f"사자{cls.ENUM}", 200, 40, 10, 80, 4, 150)
 
     def habit(self):
         return [
@@ -92,7 +92,7 @@ class Zebra(Animal):
 
     @classmethod
     def info(cls):
-        return (f"Zebra{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
+        return (f"얼룩말{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
 
     def habit(self):
         return [
@@ -104,3 +104,9 @@ class Zebra(Animal):
         return pygame.transform.scale(
             pygame.image.load("images/zebra.png"), (60, 60)
         )
+    
+class Elephant(Animal):
+    ENUM=0
+    @classmethod
+    def info(cls):
+        return (f'Alephant{cls.ENUM}',)

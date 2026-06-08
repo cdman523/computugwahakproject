@@ -35,7 +35,7 @@ class World:
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = pos
         if isinstance(ett,Animal):
-            addlog(f'새로운 {ett.name}을(를) 소환했습니다.')
+            addlog(f'{ett.name}을(를) 소환했습니다.')
 
     def update(self):
         for entity in self.entities:
@@ -111,7 +111,7 @@ class Animal(Entity):
     def dead(self):
         self.world.summon(Carcass, self.pos)
         self.world.remove(self)
-        addlog(f'{self.name}이 사망했습니다.')
+        addlog(f'{self.name}이(가) 사망했습니다.')
 
 
 class Carcass(Entity):
