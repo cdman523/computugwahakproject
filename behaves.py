@@ -87,8 +87,7 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
         if direction.length() > 0:
             direction = direction.normalize()
             speed = getattr(self.actor, 'speed', 3)
-            self.actor.pos += direction * speed
-        
+            self.actor.move(speed,self.actor.pos+direction*speed)
         return True
 
 class CHARGE_RUSH(Behaves):
