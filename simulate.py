@@ -15,6 +15,9 @@ class Simulator:
         self.world = World()
         self.running = False
         self.clock = pygame.time.Clock()
+        self.xspeed=1
+        self.timecount=0
+        self.pause=False
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
         self.world.summon(
@@ -26,7 +29,10 @@ class Simulator:
         self.running = True
         while self.running:
             self.handle_user_input()
-            self.world.update()
+            self.timecount+=self.xspeed*(not self.pause)
+            while self.timecount>=1:
+                self.world.update()
+                self.timecount-=1
             self.draw()
             pygame.display.flip()
             self.clock.tick(60)
@@ -47,6 +53,12 @@ class Simulator:
                     )
                 elif event.key==pygame.K_2:
                     pass
+                elif event.key==pygame.K_SPACE:
+                    self.pause=not self.pause
+                elif event.key==pygame.K_UP:
+                    self.xspeed+=0.25
+                elif event.key==pygame.K_DOWN:
+                    self.xspeed-=0.25
 
     def draw_background(self):
         self.screen.blit(

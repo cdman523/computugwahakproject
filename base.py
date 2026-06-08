@@ -52,7 +52,7 @@ class World:
             and (an.pos.distance_to(entity.pos)) <= findrange
         ]
 
-    def findnearesttarget(self, entity, targetlist=None, findrange=float("inf")):
+    def findnearesttarget(self, entity:Entity, targetlist=None, findrange=float("inf"))->Entity|None:
         targets = self.findtarget(entity, targetlist, findrange)
         if len(targets) == 0:
             return None
