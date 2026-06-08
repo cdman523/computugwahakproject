@@ -87,8 +87,7 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
         if direction.length() > 0:
             direction = direction.normalize()
             speed = getattr(self.actor, 'speed', 3)
-            self.actor.pos += direction * speed
-        
+            self.actor.move(speed,self.actor.pos+direction*speed)
         return True
 
 class CHARGE_RUSH(Behaves):
@@ -362,6 +361,8 @@ class WANDER(Behaves):
             self.actor.move(self.actor.speed, target_pos)
             return True
             
+        return False
+
         return
     
 class ATTACK_LION_WHEN_MANY(Behaves):
@@ -383,3 +384,4 @@ class ATTACK_LION_WHEN_MANY(Behaves):
             return True
             
         return False
+
