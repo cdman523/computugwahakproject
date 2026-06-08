@@ -24,7 +24,7 @@ class Buffalo(Animal):
     ENUM=0
 
     def habit(self):
-        return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self)]
+        return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self),WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(
@@ -39,7 +39,7 @@ class Buffalo(Animal):
 class Gazelle(Animal):
     ENUM=0
     def habit(self):
-        return [GAZELLE_MOVE_TO_GAZELLE(self)]
+        return [GAZELLE_MOVE_TO_GAZELLE(self),WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(
@@ -54,7 +54,7 @@ class Gazelle(Animal):
 class Hyena(Animal):
     ENUM=0
     def habit(self):
-        return [ATTACK_TARGET(self,[Gazelle,Zebra]), EAT_CARCASS(self)]
+        return [ATTACK_TARGET(self,[Gazelle,Zebra]), EAT_CARCASS(self), ATTACK_LION_WHEN_MANY(self),WANDER(self)]
     
     def surface(self):
         return pygame.transform.scale(
@@ -83,6 +83,7 @@ class Lion(Animal):
             LION_HUNT_PACK(self),
             ATTACK_TARGET(self, [Zebra, Gazelle]),
             DONOTHING(self),
+            WANDER(self)
         ]
 
     def surface(self):
@@ -105,6 +106,7 @@ class Zebra(Animal):
             RUNAWAY(self),
             EAT_GRASS(self),
             DONOTHING(self),
+            WANDER(self)
         ]
 
     def surface(self):
@@ -119,6 +121,6 @@ class Elephant(Animal):
         cls.ENUM+=1
         return (f'Alephant{cls.ENUM}',)
     def habit(self):
-        return []
+        return [WANDER(self)]
     def surface(self):
         return pygame.transform.scale(pygame.image.load('images/alephant.png'),(60,60))
