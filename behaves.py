@@ -328,3 +328,38 @@ class RUNAWAY(Behaves):
 
         return True
 
+
+    # 평상시 목적지 없이 배회 (단, 코끼리 주변에는 접근 불가)
+class WANDER(Behaves):
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World):
+        from animals import Elephant
+        
+        # 주변에 코끼리가 있는지 먼저 감지
+        elephant = world.findnearesttarget(self.actor, Elephant, findrange=100)
+        
+        if elephant:
+            # 코끼리가 있으면 코끼리의 반대 방향으로 도망침
+            escape_dir = self.actor.pos - elephant.pos
+            if escape_dir.length() > 0:
+                # 코끼리 반대 방향으로 안전거리를 확보할 수 있는 목표 지점 설정
+                target_pos = self.actor.pos + escape_dir.normalize() * 60
+                
+                # 코끼리를 피해 일반 속도로 이동
+                self.actor.move(self.actor.speed, target_pos)
+                return True
+
+        if r.random() < 0.1:
+            random_offset = Vector2(r.randint(-30, 30), r.randint(-30, 30))
+            target_pos = self.actor.pos + random_offset
+            
+            # 화면 경계 밖으로 나가지 않도록 보정
+            target_pos.x = max(10, min(1190, target_pos.x))
+            target_pos.y = max(10, min(740, target_pos.y))
+            
+            self.actor.move(self.actor.speed, target_pos)
+            return True
+            
+        return False
