@@ -57,3 +57,13 @@ class Lion(Animal):
 
     def info(self):
         pass
+
+class Elephant(Animal):
+    def habit(self):
+        return []
+    
+    def surface(self):
+        pass
+
+    def info(self):
+        pass
