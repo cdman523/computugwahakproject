@@ -35,7 +35,7 @@ class World:
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = pos
         if isinstance(ett,Animal):
-            addlog(f'{ett.name}이 소환되었습니다.')
+            addlog(f'새로운 {ett.name}을(를) 소환했습니다.')
 
     def update(self):
         for entity in self.entities:
