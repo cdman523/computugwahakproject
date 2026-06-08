@@ -362,4 +362,24 @@ class WANDER(Behaves):
             self.actor.move(self.actor.speed, target_pos)
             return True
             
+        return
+    
+class ATTACK_LION_WHEN_MANY(Behaves):
+    def __init__(self,actor: Animal):
+        self.actor=actor
+    
+    def act(self,world: World):
+        from animals import Hyena, Lion
+        lion_target = world.findnearresttarget(self.actor,Lion,findrange=self.actor.sight)
+        if not lion_target:
+            return False
+        nearby_hyena = world.findtarget(self.actor,Hyena,findrange=self.actor.sight)
+        if len(nearby_hyena)+1>=10:
+            if self.actor.pos.distance_to(lion_target.pos)>15:
+                self.actor.move(self.actor.speed*1.3, lion_target.pos)
+            else:
+                damage = max(1, self.actor.attack - lion_target.defense)
+                lion_target.hp -= damage
+            return True
+            
         return False
