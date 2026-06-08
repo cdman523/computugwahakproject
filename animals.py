@@ -7,6 +7,7 @@ from behaves import *
 class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA(
     Animal
 ):
+    ENUM=0
     def habit(self):
         return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
 
@@ -15,7 +16,8 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
 
     @classmethod
     def info(cls):
-        return ("대서우", 10,10,10,20,10,10)
+        cls.ENUM+=1
+        return (f"대서우{cls.ENUM}", 10,10,10,20,10,10)
 
 
 class Buffalo(Animal):

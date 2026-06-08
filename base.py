@@ -34,6 +34,8 @@ class World:
     def summon(self, entity, pos):
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = pos
+        if isinstance(ett,Animal):
+            addlog(f'{ett.name}이 소환되었습니다.')
 
     def update(self):
         for entity in self.entities:
@@ -109,6 +111,7 @@ class Animal(Entity):
     def dead(self):
         self.world.summon(Carcass, self.pos)
         self.world.remove(self)
+        addlog(f'{self.name}이 사망했습니다.')
 
 
 class Carcass(Entity):
@@ -152,3 +155,7 @@ class Grass:
 
     def grow(self, val):
         self.remain += val
+
+def addlog(txt):
+    with open('log.txt','a',encoding='UTF-8') as f:
+        f.write(txt+'\n')

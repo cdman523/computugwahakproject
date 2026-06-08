@@ -36,6 +36,7 @@ class EXAMPLE_HELLO(Behaves):
 
     def act(self, world: World):
         print("hello!!!!!!!!!!!!!")
+        self.hellower.dead()
         return True
 
 

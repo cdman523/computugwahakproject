@@ -1,6 +1,6 @@
 # 시각화 코드
 import pygame
-from base import World, Carcass
+from base import World, Carcass, addlog
 from animals import (
     ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
 )
@@ -18,6 +18,7 @@ class Simulator:
         self.xspeed=1
         self.timecount=0
         self.pause=False
+        with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
         self.world.summon(
@@ -40,6 +41,7 @@ class Simulator:
     def draw(self):
         self.draw_background()
         self.draw_entities()
+        self.draw_UI()
 
     def handle_user_input(self):
         for event in pygame.event.get():
@@ -56,9 +58,13 @@ class Simulator:
                 elif event.key==pygame.K_SPACE:
                     self.pause=not self.pause
                 elif event.key==pygame.K_UP:
-                    self.xspeed+=0.25
+                    self.xspeed+=0.1
                 elif event.key==pygame.K_DOWN:
-                    self.xspeed-=0.25
+                    self.xspeed-=0.1
+                elif event.key==pygame.K_RIGHT:
+                    self.xspeed+=1
+                elif event.key==pygame.K_LEFT:
+                    self.xspeed-=1
 
     def draw_background(self):
         self.screen.blit(
@@ -75,3 +81,12 @@ class Simulator:
             if surface is None:
                 continue
             self.screen.blit(surface, loc)
+
+    @staticmethod
+    def draw_text(screen,text,x,y,size,color=(255,255,255)):
+        font = pygame.font.SysFont('malgungothic', size)
+        text_surface = font.render(text, True, color)
+        screen.blit(text_surface, (x, y))
+
+    def draw_UI(self):
+        self.draw_text(self.screen,f'{self.xspeed:.2f}배속'+('(일시정지됨)' if self.pause else ''),0,0,30)
