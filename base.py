@@ -6,6 +6,7 @@ import random as r
 class Entity(ABC):
     def __init__(self, pos: pygame.Vector2):
         self.pos = pos
+        self.isdead=False
 
     def __hash__(self):
         return id(self)
@@ -39,16 +40,19 @@ class World:
 
     def update(self):
         for entity in self.entities:
-            for a in entity.habit():
-                if a.act(self):
-                    if isinstance(a,Animal):
-                        a.hunger-=0.01
-                        print(a.hunger)
-                        if a.hunger<=0:
-                            a.hp-=0.1
-                        elif a.hunger>=a.MAXHUNGER*0.9:
-                            a.hp+=0.05
-                    break
+            if not entity.isdead:
+                for a in entity.habit():
+                    if a.act(self):
+                        if isinstance(entity,Animal):
+                            entity.hunger-=0.01
+                            if entity.hunger<=0:
+                                entity.hp-=0.05
+                            elif entity.hunger>=entity.MAXHUNGER*0.9:
+                                entity.hp+=0.1
+                        break
+        for gra in self.grass_map:
+            for ss in gra:
+                ss.grow(r.uniform(0.1,1.5))
 
     def remove(self, entity: "Entity"):
         del self.entity_map[entity]
@@ -59,6 +63,7 @@ class World:
             for an in self.entities
             if (targetlist is None or isinstance(an, targetlist))
             and (an.pos.distance_to(entity.pos)) <= findrange
+            and an!=entity
         ]
 
     def findnearesttarget(self, entity:Entity, targetlist=None, findrange=float("inf"))->Entity|None:
@@ -68,7 +73,7 @@ class World:
         return min(targets, key=lambda aa: aa.pos.distance_to(entity.pos))
     
     def wheregrass(self,entity):
-        return (entity.pos.x//75,entity.pos.y//75)
+        return (int(entity.pos.x//75),int(entity.pos.y//75))
 
 
 class Behaves(ABC):
@@ -90,6 +95,7 @@ class Animal(Entity):
         pos: pygame.Vector2,
         world,
     ):
+        self.isdead=False
         self.name = name
         self.maxhp=self.hp = hp
         self.attack = attack
@@ -99,11 +105,14 @@ class Animal(Entity):
         self.sight = sight
         self.pos = pos
         self.world = world
+        
     @property
     def hp(self):
         return self._hp
     @hp.setter
     def hp(self,v):
+        if self.isdead:
+            return
         self._hp=v if v<=self.maxhp else self.maxhp
         if self.hp<=0:
             self.dead()
@@ -111,22 +120,26 @@ class Animal(Entity):
     @property
     def hunger(self):
         return self._hunger
+    
     @hunger.setter
     def hunger(self,v):
-        self._hunger=v if v<=self.MAXHUNGER else self.MAXHUNGER
+        self._hunger=v if 0<=v<=self.MAXHUNGER else 0 if v<0 else self.MAXHUNGER
 
 
 
     def move(self, speed, goto: pygame.Vector2):
-        if goto.x<0 or goto.x>1200 or goto.y<0 or goto.y>750:
-            return self.move(speed,pygame.Vector2(max(min(1200,goto.x),0),max(min(750,goto.y),0)))
+        if goto.x<20 or goto.x>1180 or goto.y<20 or goto.y>730:
+            return self.move(speed,pygame.Vector2(max(min(1180,goto.x),20),max(min(730,goto.y),20)))
         self.pos = goto
         if speed > self.speed:
-            self.hunger -= 0.05
+            self.hunger -= (speed-self.speed)/self.speed
         self.world.entity_map[self]=goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):
+        if self.isdead:
+            return
+        self.isdead=True
         self.world.summon(Carcass, self.pos)
         self.world.remove(self)
         addlog(f'{self.name}이(가) 사망했습니다.')
@@ -136,19 +149,20 @@ class Carcass(Entity):
     def __init__(self, remain: float, pos: "pygame.Vector2", world):
         self.remain = remain
         self.pos = pos
+        self.isdead=False
 
     @classmethod
     def info(cls):
-        return (10,)
+        return (100,)
 
     def habit(self) -> list["Behaves"]:
         return [Rot(self)]
 
     def surface(self):
         sf = pygame.transform.scale(
-            pygame.image.load("images/testimage0.png"), (60, 60)
+            pygame.image.load("images/carcas.png"), (90, 90)
         )
-        sf.set_alpha(int(self.remain * 255 / 10))
+        sf.set_alpha(int(self.remain * 255 / 100))
         return sf
 
 
@@ -160,6 +174,7 @@ class Rot(Behaves):
 
     def act(self, world: World) -> bool:
         if self.carcass.remain <= 0:
+            self.carcass.isdead=True
             world.remove(self.carcass)
         else:
             self.carcass.remain -= self.ROT_VELOCITY

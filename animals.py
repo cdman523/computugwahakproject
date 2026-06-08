@@ -54,7 +54,7 @@ class Gazelle(Animal):
 class Hyena(Animal):
     ENUM=0
     def habit(self):
-        return [ATTACK_TARGET(self), EAT_CARCASS(self)]
+        return [ATTACK_TARGET(self,[Gazelle,Zebra]), EAT_CARCASS(self)]
     
     def surface(self):
         return pygame.transform.scale(
@@ -66,33 +66,23 @@ class Hyena(Animal):
         cls.ENUM+=1
         return (f'하이에나{cls.ENUM}',)
 
+
 class Lion(Animal):
     ENUM=0
-
-    def info(self):
-        pass
-
-class Elephant(Animal):
-    def habit(self):
-        return []
-    
-    def surface(self):
-        pass
-
-    def info(self):
-        pass
-
+    @classmethod
     def info(cls):
         # (name, hp, attack, defense, hunger, speed, sight)
         cls.ENUM+=1
-        return (f"사자{cls.ENUM}", 200, 40, 10, 80, 4, 150)
+        return (f"사자{cls.ENUM}", 200, 40, 50, 50, 4, 150)
 
     def habit(self):
         return [
             LION_REST(self),
+            EAT_CARCASS(self),
             LION_GUARD_CARCASS(self),
             LION_HUNT_PACK(self),
             ATTACK_TARGET(self, [Zebra, Gazelle]),
+            DONOTHING(self),
         ]
 
     def surface(self):
@@ -113,6 +103,8 @@ class Zebra(Animal):
         return [
             ZEBRA_ALERT(self),
             RUNAWAY(self),
+            EAT_GRASS(self),
+            DONOTHING(self),
         ]
 
     def surface(self):

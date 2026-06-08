@@ -1,4 +1,4 @@
-from base import Behaves, Animal, Entity, World, Carcass
+from base import Behaves, Animal, Entity, World, Carcass,addlog
 from animals import *
 from pygame import Vector2
 
@@ -35,10 +35,15 @@ class EXAMPLE_HELLO(Behaves):
         self.hellower = hellower
 
     def act(self, world: World):
-        print("hello!!!!!!!!!!!!!")
         return True
 
 
+class DONOTHING(Behaves):
+    def __init__(self,er):
+        self.er=er
+    def act(self,world:World):
+        return True
+    
 class BUFFALO_MOVE_TO_BUFFALO(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
@@ -145,7 +150,7 @@ class ATTACK_TARGET(Behaves):
                 return False
 
             if self.predator.pos.distance_to(target.pos) > 15:
-                self.predator.move(self.predator.speed * 1.3, target.pos)
+                self.predator.move(self.predator.speed * 1.3, self.predator.pos+(target.pos-self.predator.pos).normalize()*2.5)
             else:
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
@@ -157,10 +162,10 @@ class EAT_GRASS(Behaves):
         self.eater=eater
     def act(self,world:World):
         grassx,grassy=world.wheregrass(self.eater)
-        if world.grass_map[grassy][grassx]<=10 or self.eater.hunger>35:
+        if world.grass_map[grassy][grassx].remain<=10 or self.eater.hunger>35:
             return False
         self.eater.hunger+=1
-        world.grass_map[grassy][grassx]-=5
+        world.grass_map[grassy][grassx].remain-=0.5
         return True
 
 class EAT_CARCASS(Behaves):
@@ -173,16 +178,17 @@ class EAT_CARCASS(Behaves):
         
         target = world. findnearesttarget(self.actor, Carcass, findrange=self.actor.sight)
         if target:
+        #사자는 신선한 많이 남은 시체만 먹음. 하이에나는 남은 양 무관.
             from animals import Lion
-#사자는 신선한 많이 남은 시체만 먹음. 하이에나는 남은 양 무관.
             if isinstance(self.actor, Lion) and target.remain < 70:
                 return False
         #시체 근처로 이동 후 섭취
             if self.actor.pos.distance_to(target.pos) > 10:
                 self.actor.move(self.actor.speed,target.pos)
             else:
-                target.remain-=5
-                self.actor.hunger=min(self.actor.MAXHUNGER, self.actor.hunger + 10)
+                target.remain-=0.2
+                self.actor.hunger+=0.5
+                self.actor.hp+=1
             return True
         return False
 class LION_GUARD_CARCASS(Behaves):
@@ -197,6 +203,10 @@ class LION_GUARD_CARCASS(Behaves):
         self.actor = actor
 
     def act(self, world: World) -> bool:
+        from animals import Hyena
+        hyena=world.findnearesttarget(self.actor,(Hyena,),findrange=self.actor.sight)
+        if hyena is None:
+            return False
         carcass = world.findnearesttarget(
             self.actor, (Carcass,), findrange=self.actor.sight
         )
@@ -313,7 +323,7 @@ class RUNAWAY(Behaves):
         else:
             # 포식자 반대 방향으로 한 스텝 — move()가 방향+거리 계산하므로
             # 현재 pos에서 충분히 먼 반대 지점을 목표로 넘긴다
-            away = self.actor.pos + (self.actor.pos - predator.pos).normalize() * 9999
+            away = self.actor.pos + (self.actor.pos - predator.pos).normalize() * 2
             self.actor.move(self.actor.speed, away)
 
         return True

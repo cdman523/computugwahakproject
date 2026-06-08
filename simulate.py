@@ -64,6 +64,8 @@ class Simulator:
                     self.world.summon(Zebra,mousepos)
                 elif event.key==pygame.K_6:
                     self.world.summon(Gazelle,mousepos)
+                elif event.key==pygame.K_7:
+                    self.world.summon(Carcass,mousepos)
                 elif event.key==pygame.K_SPACE:
                     self.pause=not self.pause
                 elif event.key==pygame.K_UP:
@@ -91,26 +93,27 @@ class Simulator:
             if surface is None:
                 continue
             if isinstance(e,Animal):
-                self.draw_hpbar(e,loc,surface)
+                self.draw_bar(e,loc,surface)
             self.screen.blit(surface, loc)
     
-    def draw_hpbar(self,entity,pos,surface):
+    def draw_bar(self,entity,pos,surface):
         width=surface.get_width()
         height=6
-        hp_ratio=max(0,min(1,entity.hp/entity.maxhp))
         x=pos.x
-        y=pos.y-10
+        y=pos.y-15
+        hpratio=entity.hp/entity.maxhp
+        hungerratio=entity.hunger/entity.MAXHUNGER
         pygame.draw.rect(
         self.screen,
-        (80, 80, 80),
+        (40, 40, 40),
         (x, y, width, height)
         )
 
         # 체력
         pygame.draw.rect(
         self.screen,
-        (0, 255, 0),
-        (x, y, width * hp_ratio, height)
+        (255,255,0) if hpratio>0.6 else (255,165,0) if hpratio>0.3 else (255,99,71),
+        (x, y, width * hpratio, height)
         )
 
         # 테두리
@@ -118,6 +121,27 @@ class Simulator:
         self.screen,
         (255, 255, 255),
         (x, y, width, height),
+        1
+        )
+
+        pygame.draw.rect(
+        self.screen,
+        (40, 40, 40),
+        (x, y+8, width, height)
+        )
+
+        # 체력
+        pygame.draw.rect(
+        self.screen,
+        (160, 110, 60),
+        (x, y+8, width * hungerratio, height)
+        )
+
+        # 테두리
+        pygame.draw.rect(
+        self.screen,
+        (255, 255, 255),
+        (x, y+8, width, height),
         1
         )
 
