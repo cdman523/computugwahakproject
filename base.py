@@ -34,6 +34,8 @@ class World:
     def summon(self, entity, pos):
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = pos
+        if isinstance(ett,Animal):
+            addlog(f'{ett.name}을(를) 소환했습니다.')
 
     def update(self):
         for entity in self.entities:
@@ -52,7 +54,7 @@ class World:
             and (an.pos.distance_to(entity.pos)) <= findrange
         ]
 
-    def findnearesttarget(self, entity, targetlist=None, findrange=float("inf")):
+    def findnearesttarget(self, entity:Entity, targetlist=None, findrange=float("inf"))->Entity|None:
         targets = self.findtarget(entity, targetlist, findrange)
         if len(targets) == 0:
             return None
@@ -103,12 +105,13 @@ class Animal(Entity):
         self.pos = goto
         if speed > self.speed:
             self.hunger -= 0.05
-        self.pos = goto
+        self.world.entity_map[self]=goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):
         self.world.summon(Carcass, self.pos)
         self.world.remove(self)
+        addlog(f'{self.name}이(가) 사망했습니다.')
 
 
 class Carcass(Entity):
@@ -152,3 +155,7 @@ class Grass:
 
     def grow(self, val):
         self.remain += val
+
+def addlog(txt):
+    with open('log.txt','a',encoding='UTF-8') as f:
+        f.write(txt+'\n')
