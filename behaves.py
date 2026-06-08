@@ -61,6 +61,74 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             self.actor.move(speed,self.actor.pos+direction*speed)
         return True
 
+class GAZELLE_MOVE_TO_GAZELLE(Behaves):
+    def __init__(self, actor: Animal):
+        self.actor = actor
+
+    def act(self, world: World):
+        target = None
+        min_dist = float('inf')
+        for entity in getattr(world, 'entities', []):
+            if entity.__class__.__name__ == "Gazelle" and entity is not self.actor:
+                dist = self.actor.pos.distance_to(entity.pos)
+                if dist < min_dist:
+                    min_dist = dist
+                    target = entity
+        
+        if target is None:
+            return False
+        
+        direction = target.pos - self.actor.pos
+        if direction.length() > 0:
+            direction = direction.normalize()
+            speed = getattr(self.actor, 'speed', 3)
+            self.actor.pos += direction * speed
+        
+        return True
+
+class CHARGE_RUSH(Behaves):
+    def __init__(self, actor: Animal):
+        self.actor = actor
+        self.detect_radius = 150.0  
+        self.damage_radius = 20.0   
+        self.rush_speed_mult = 2.5  
+        self.collision_damage = 10  
+
+    def act(self, world: World):
+        predators = []
+        predator_names = ["Lion", "Hyena"] 
+
+        for entity in getattr(world, 'entities', []):
+            if entity.__class__.__name__ in predator_names:
+                if self.actor.pos.distance_to(entity.pos) <= self.detect_radius:
+                    predators.append(entity)
+        
+        if not predators:
+            return False 
+
+        escape_dir = Vector2(0, 0)
+        for p in predators:
+            escape_dir += (self.actor.pos - p.pos)
+        
+        if escape_dir.length() > 0:
+            escape_dir = escape_dir.normalize()
+        else:
+            escape_dir = Vector2(1, 0) 
+
+        base_speed = getattr(self.actor, 'speed', 2)
+        rush_velocity = escape_dir * (base_speed * self.rush_speed_mult)
+        self.actor.pos += rush_velocity
+
+        for entity in getattr(world, 'entities', []):
+            if entity is not self.actor:
+                if self.actor.pos.distance_to(entity.pos) <= self.damage_radius:
+                    if hasattr(entity, 'hp'):
+                        entity.hp -= self.collision_damage
+                    elif hasattr(entity, 'take_damage'):
+                        entity.take_damage(self.collision_damage)
+
+        return True
+
 class ATTACK_TARGET(Behaves):
     def __init__(self, predator: Animal, target_types: list):
         self.predator = predator

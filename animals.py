@@ -69,7 +69,19 @@ class Hyena(Animal):
 class Lion(Animal):
     ENUM=0
 
-    @classmethod
+    def info(self):
+        pass
+
+class Elephant(Animal):
+    def habit(self):
+        return []
+    
+    def surface(self):
+        pass
+
+    def info(self):
+        pass
+
     def info(cls):
         # (name, hp, attack, defense, hunger, speed, sight)
         cls.ENUM+=1
