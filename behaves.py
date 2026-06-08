@@ -1,7 +1,7 @@
 from base import Behaves, Animal, Entity, World, Carcass,addlog
 from animals import *
 from pygame import Vector2
-
+import random as r
 # 예시 코드
 # 예시1-JUMP는 speed가 10 이상, 배고픔이 10 이상이여야 할 수 있고, 실행시 pos를 +val,+val한다
 
