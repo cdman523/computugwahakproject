@@ -110,3 +110,7 @@ class Elephant(Animal):
     @classmethod
     def info(cls):
         return (f'Alephant{cls.ENUM}',)
+    def habit(self):
+        return []
+    def surface(self):
+        return pygame.transform.scale(pygame.image.load('images/alephant.png'),(60,60))
