@@ -49,21 +49,22 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
         self.actor = actor
 
     def act(self, world: World):
-        target = None
-        min_dist = float("inf")
-        for entity in getattr(world, "entities", []):
-            if entity.__class__.__name__ == "Buffalo" and entity is not self.actor:
-                dist = self.actor.pos.distance_to(entity.pos)
-                if dist < min_dist:
-                    min_dist = dist
-                    target = entity
+        target = world.findnearesttarget(
+            entity=self.actor, 
+            targetlist=type(self.actor), 
+            findrange=self.actor.sight
+        )
+
         if target is None:
             return False
+
         direction = target.pos - self.actor.pos
         if direction.length() > 0:
             direction = direction.normalize()
-            speed = getattr(self.actor, "speed", 2)
-            self.actor.move(speed,self.actor.pos+direction*speed)
+            speed = self.actor.speed
+            goto = self.actor.pos + direction * speed
+            self.actor.move(speed, goto)
+            
         return True
 
 class GAZELLE_MOVE_TO_GAZELLE(Behaves):
@@ -71,14 +72,11 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
         self.actor = actor
 
     def act(self, world: World):
-        target = None
-        min_dist = float('inf')
-        for entity in getattr(world, 'entities', []):
-            if entity.__class__.__name__ == "Gazelle" and entity is not self.actor:
-                dist = self.actor.pos.distance_to(entity.pos)
-                if dist < min_dist:
-                    min_dist = dist
-                    target = entity
+        target = world.findnearesttarget(
+            entity=self.actor, 
+            targetlist=type(self.actor), 
+            findrange=self.actor.sight
+        )
         
         if target is None:
             return False
@@ -86,8 +84,10 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
         direction = target.pos - self.actor.pos
         if direction.length() > 0:
             direction = direction.normalize()
-            speed = getattr(self.actor, 'speed', 3)
-            self.actor.move(speed,self.actor.pos+direction*speed)
+            speed = self.actor.speed
+            goto = self.actor.pos + direction * speed
+            self.actor.move(speed, goto)
+            
         return True
 
 class CHARGE_RUSH(Behaves):
@@ -99,40 +99,33 @@ class CHARGE_RUSH(Behaves):
         self.collision_damage = 10  
 
     def act(self, world: World):
-        predators = []
         predator_names = ["Lion", "Hyena"] 
-
-        for entity in getattr(world, 'entities', []):
-            if entity.__class__.__name__ in predator_names:
-                if self.actor.pos.distance_to(entity.pos) <= self.detect_radius:
-                    predators.append(entity)
+        nearby_animals = world.findtarget(self.actor, Animal, self.detect_radius)
+        predators = [an for an in nearby_animals if an.__class__.__name__ in predator_names]
         
         if not predators:
             return False 
 
-        escape_dir = Vector2(0, 0)
+        escape_dir = pygame.Vector2(0, 0)
         for p in predators:
             escape_dir += (self.actor.pos - p.pos)
         
         if escape_dir.length() > 0:
             escape_dir = escape_dir.normalize()
         else:
-            escape_dir = Vector2(1, 0) 
+            escape_dir = pygame.Vector2(1, 0) 
 
-        base_speed = getattr(self.actor, 'speed', 2)
-        rush_velocity = escape_dir * (base_speed * self.rush_speed_mult)
-        self.actor.pos += rush_velocity
+        rush_speed = self.actor.speed * self.rush_speed_mult
+        goto = self.actor.pos + (escape_dir * rush_speed)
+        
+        self.actor.move(rush_speed, goto)
 
-        for entity in getattr(world, 'entities', []):
-            if entity is not self.actor:
-                if self.actor.pos.distance_to(entity.pos) <= self.damage_radius:
-                    if hasattr(entity, 'hp'):
-                        entity.hp -= self.collision_damage
-                    elif hasattr(entity, 'take_damage'):
-                        entity.take_damage(self.collision_damage)
+        hit_targets = world.findtarget(self.actor, Animal, self.damage_radius)
+        for target in hit_targets:
+            target.hp -= self.collision_damage
 
         return True
-
+        
 class ATTACK_TARGET(Behaves):
     def __init__(self, predator: Animal, target_types: list):
         self.predator = predator
