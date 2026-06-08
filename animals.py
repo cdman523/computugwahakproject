@@ -37,6 +37,7 @@ class Buffalo(Animal):
         return (f'버팔로{cls.ENUM}',)
 
 class Gazelle(Animal):
+    ENUM=0
     def habit(self):
         return [GAZELLE_MOVE_TO_GAZELLE(self)]
 
@@ -51,6 +52,7 @@ class Gazelle(Animal):
         return (f'가젤{cls.ENUM}',)
 
 class Hyena(Animal):
+    ENUM=0
     def habit(self):
         return [ATTACK_TARGET(self), EAT_CARCASS(self)]
     
@@ -92,6 +94,7 @@ class Zebra(Animal):
 
     @classmethod
     def info(cls):
+        cls.ENUM+=1
         return (f"얼룩말{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
 
     def habit(self):
@@ -109,6 +112,7 @@ class Elephant(Animal):
     ENUM=0
     @classmethod
     def info(cls):
+        cls.ENUM+=1
         return (f'Alephant{cls.ENUM}',)
     def habit(self):
         return []

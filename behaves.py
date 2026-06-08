@@ -147,7 +147,7 @@ class LION_REST(Behaves):
         self.actor = actor
 
     def act(self, world: World) -> bool:
-        if self.actor.hunger < self.actor.MAX_HUNGER * 0.8:
+        if self.actor.hunger < self.actor.MAXHUNGER * 0.8:
             return False
         return True  # 배부름 → 휴식, 사냥 차단
 class LION_HUNT_PACK(Behaves):
@@ -187,8 +187,6 @@ class LION_HUNT_PACK(Behaves):
             if self.actor.pos.distance_to(target.pos) <= 15:
                 damage = max(1, self.actor.attack - target.defense)
                 target.hp -= damage
-                if target.hp <= 0:
-                    target.dead()
 
         return True
 class ZEBRA_ALERT(Behaves):

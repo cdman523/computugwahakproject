@@ -1,9 +1,7 @@
 # 시각화 코드
 import pygame
 from base import World, Carcass, addlog
-from animals import (
-    ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
-)
+from animals import *
 import random as r
 
 
@@ -48,13 +46,24 @@ class Simulator:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                mousepos=pygame.Vector2(pygame.mouse.get_pos())
+                if event.key == pygame.K_0:
                     self.world.summon(
                         ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
-                        pygame.Vector2(pygame.mouse.get_pos()),
+                        mousepos,
                     )
+                elif event.key==pygame.K_1:
+                    self.world.summon(Elephant,mousepos)
                 elif event.key==pygame.K_2:
-                    pass
+                    self.world.summon(Lion,mousepos)
+                elif event.key==pygame.K_3:
+                    self.world.summon(Hyena,mousepos)
+                elif event.key==pygame.K_4:
+                    self.world.summon(Buffalo,mousepos)
+                elif event.key==pygame.K_5:
+                    self.world.summon(Zebra,mousepos)
+                elif event.key==pygame.K_6:
+                    self.world.summon(Gazelle,mousepos)
                 elif event.key==pygame.K_SPACE:
                     self.pause=not self.pause
                 elif event.key==pygame.K_UP:
@@ -65,7 +74,8 @@ class Simulator:
                     self.xspeed+=1
                 elif event.key==pygame.K_LEFT:
                     self.xspeed-=1
-
+                elif event.key==pygame.K_z:
+                    print(self.world.entities)
     def draw_background(self):
         self.screen.blit(
             pygame.transform.scale(
@@ -80,7 +90,36 @@ class Simulator:
             surface = e.surface()
             if surface is None:
                 continue
+            if isinstance(e,Animal):
+                self.draw_hpbar(e,loc,surface)
             self.screen.blit(surface, loc)
+    
+    def draw_hpbar(self,entity,pos,surface):
+        width=surface.get_width()
+        height=6
+        hp_ratio=max(0,min(1,entity.hp/entity.maxhp))
+        x=pos.x
+        y=pos.y-10
+        pygame.draw.rect(
+        self.screen,
+        (80, 80, 80),
+        (x, y, width, height)
+        )
+
+        # 체력
+        pygame.draw.rect(
+        self.screen,
+        (0, 255, 0),
+        (x, y, width * hp_ratio, height)
+        )
+
+        # 테두리
+        pygame.draw.rect(
+        self.screen,
+        (255, 255, 255),
+        (x, y, width, height),
+        1
+        )
 
     @staticmethod
     def draw_text(screen,text,x,y,size,color=(255,255,255)):

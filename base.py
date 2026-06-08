@@ -41,6 +41,13 @@ class World:
         for entity in self.entities:
             for a in entity.habit():
                 if a.act(self):
+                    if isinstance(a,Animal):
+                        a.hunger-=0.01
+                        print(a.hunger)
+                        if a.hunger<=0:
+                            a.hp-=0.1
+                        elif a.hunger>=a.MAXHUNGER*0.9:
+                            a.hp+=0.05
                     break
 
     def remove(self, entity: "Entity"):
@@ -84,7 +91,7 @@ class Animal(Entity):
         world,
     ):
         self.name = name
-        self.hp = hp
+        self.maxhp=self.hp = hp
         self.attack = attack
         self.defense = defense
         self.hunger = hunger
@@ -92,7 +99,15 @@ class Animal(Entity):
         self.sight = sight
         self.pos = pos
         self.world = world
-        
+    @property
+    def hp(self):
+        return self._hp
+    @hp.setter
+    def hp(self,v):
+        self._hp=v if v<=self.maxhp else self.maxhp
+        if self.hp<=0:
+            self.dead()
+
     @property
     def hunger(self):
         return self._hunger
@@ -101,7 +116,10 @@ class Animal(Entity):
         self._hunger=v if v<=self.MAXHUNGER else self.MAXHUNGER
 
 
+
     def move(self, speed, goto: pygame.Vector2):
+        if goto.x<0 or goto.x>1200 or goto.y<0 or goto.y>750:
+            return self.move(speed,pygame.Vector2(max(min(1200,goto.x),0),max(min(750,goto.y),0)))
         self.pos = goto
         if speed > self.speed:
             self.hunger -= 0.05
