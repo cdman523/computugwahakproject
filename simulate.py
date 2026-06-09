@@ -90,13 +90,13 @@ class Simulator:
         )
 
     def draw_entities(self):
-        for e, loc in self.world.entity_map.items():
+        for e, loc in sorted(self.world.entity_map.items(),key=lambda item:item[0].layer):
             surface = e.surface()
             if surface is None:
                 continue
             if isinstance(e,Animal):
                 self.draw_bar(e,loc,surface)
-            rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.19)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
+            rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.15)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
             self.screen.blit(surface, rect)
     
     def draw_bar(self,entity,pos,surface):

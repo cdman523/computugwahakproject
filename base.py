@@ -4,6 +4,7 @@ import random as r
 
 
 class Entity(ABC):
+    layer=0
     def __init__(self, pos: pygame.Vector2):
         self.pos = pos
         self.isdead=False
@@ -83,6 +84,7 @@ class Behaves(ABC):
 
 class Animal(Entity):
     MAXHUNGER=50
+    layer=1
     def __init__(
         self,
         name,
@@ -146,6 +148,7 @@ class Animal(Entity):
 
 
 class Carcass(Entity):
+    layer=0
     def __init__(self, remain: float, pos: "pygame.Vector2", world):
         self.remain = remain
         self.pos = pos
@@ -194,11 +197,13 @@ def addlog(txt):
         f.write(txt+'\n')
 
 class Nuclear(Entity):
+    layer=100
     def __init__(self,pos,world):
         self.isdead=False
         super().__init__(pygame.Vector2(pos.x,-100))
         self.targetpos=pos
         self.world=world
+        addlog('NUCLEAR LAUNCH DETECTED')
     def fall(self,v):
         self.pos.y+=v
         self.world.entity_map[self].y+=v
@@ -222,28 +227,66 @@ class BombFall(Behaves):
         return True
 
 class Explosion(Entity):
+    layer=50
     def __init__(self,pos,world):
         super().__init__(pos)
         self.world=world
         self.radius=10
         self.mradius=1500
         self.alpha=255
+        addlog(f'목표 지점 : {pos.x}, {pos.y} 명중')
     @classmethod
     def info(cls):
         return ()
     def habit(self):
         return [NuclearBomber(self)]
     def surface(self):
-        size=int(self.radius*0.5)
-        sf=pygame.transform.scale(pygame.image.load('images/suwooattack.png'),(size,size))
-        sf.set_alpha(self.alpha)
+        size = int(self.radius * 2 + 20)
+
+        sf = pygame.Surface((size, size), pygame.SRCALPHA)
+
+        center = size // 2
+
+        # 충격파(원 둘레)
+        pygame.draw.circle(
+            sf,
+            (255, 255, 255, max(20, self.alpha // 3)),
+            (center, center),
+            int(self.radius),
+            4
+        )
+
+        # 보조 파장
+        for offset in (30, 60):
+            r = self.radius - offset
+            if r > 0:
+                pygame.draw.circle(
+                    sf,
+                    (255, 255, 255, max(10, self.alpha // 5)),
+                    (center, center),
+                    int(r),
+                    2
+                )
+
+        # 폭발 이미지
+        img_size = max(10, int(self.radius * 0.5))
+        img = pygame.transform.scale(
+            pygame.image.load("images/suwooattack.png"),
+            (img_size, img_size)
+        )
+
+        img.set_alpha(self.alpha)
+
+        rect = img.get_rect(center=(center, center))
+        sf.blit(img, rect)
+
         return sf
 
 class NuclearBomber(Behaves):
     def __init__(self,explosion):
         self.explosion=explosion
     def act(self,world):
-        self.explosion.radius+=8
+        self.explosion.radius+=6
         self.explosion.alpha-=1
         for entity in world.entities:
             if not isinstance(entity,Animal) or entity.isdead: continue

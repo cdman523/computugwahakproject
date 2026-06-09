@@ -122,7 +122,6 @@ class Lion(Animal):
             LION_GUARD_CARCASS(self),
             LION_HUNT_PACK(self),
             ATTACK_TARGET(self, [Zebra, Gazelle]),
-            DONOTHING(self),
             WANDER(self)
         ]
 
@@ -153,7 +152,6 @@ class Zebra(Animal):
             ZEBRA_ALERT(self),
             RUNAWAY(self),
             EAT_GRASS(self),
-            DONOTHING(self),
             WANDER(self)
         ]
 
