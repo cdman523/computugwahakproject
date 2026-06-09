@@ -1,4 +1,4 @@
-from base import Behaves, Animal, Entity, World, Carcass,addlog
+from base import Behaves, Animal, Entity, World, Carcass,addlog,Nuclear,Explosion
 from animals import *
 from pygame import Vector2
 import random as r

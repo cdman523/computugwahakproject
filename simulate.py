@@ -77,6 +77,8 @@ class Simulator:
                 elif event.key==pygame.K_LEFT:
                     self.xspeed-=1
                 elif event.key==pygame.K_z:
+                    self.world.summon(Nuclear,mousepos)
+                elif event.key==pygame.K_x:
                     print(self.world.entities)
     def draw_background(self):
         self.screen.blit(
@@ -94,13 +96,15 @@ class Simulator:
                 continue
             if isinstance(e,Animal):
                 self.draw_bar(e,loc,surface)
-            self.screen.blit(surface, loc)
+            rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.19)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
+            self.screen.blit(surface, rect)
     
     def draw_bar(self,entity,pos,surface):
-        width=surface.get_width()
+        rect = surface.get_rect(center=pos)
+        width=rect.width
         height=6
-        x=pos.x
-        y=pos.y-15
+        x=rect.left
+        y=rect.top-15
         hpratio=entity.hp/entity.maxhp
         hungerratio=entity.hunger/entity.MAXHUNGER
         pygame.draw.rect(

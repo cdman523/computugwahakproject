@@ -34,7 +34,7 @@ class World:
 
     def summon(self, entity, pos):
         ett = entity(*entity.info(), pos, self)
-        self.entity_map[ett] = pos
+        self.entity_map[ett] = ett.pos
         if isinstance(ett,Animal):
             addlog(f'{ett.name}을(를) 소환했습니다.')
 
@@ -192,3 +192,63 @@ class Grass:
 def addlog(txt):
     with open('log.txt','a',encoding='UTF-8') as f:
         f.write(txt+'\n')
+
+class Nuclear(Entity):
+    def __init__(self,pos,world):
+        self.isdead=False
+        super().__init__(pygame.Vector2(pos.x,-100))
+        self.targetpos=pos
+        self.world=world
+    def fall(self,v):
+        self.pos.y+=v
+        self.world.entity_map[self].y+=v
+    @classmethod
+    def info(cls):
+        return ()
+    def habit(self):
+        return [BombFall(self)]
+    def surface(self):
+        return pygame.transform.scale(pygame.image.load('images/suwoobomb.png'),(200,200))
+    
+class BombFall(Behaves):
+    def __init__(self,bomb):
+        self.bomb=bomb
+    def act(self,world):
+        self.bomb.fall(5)
+        if self.bomb.pos.y>=self.bomb.targetpos.y:
+            world.summon(Explosion,self.bomb.pos)
+            self.bomb.isdead=True
+            world.remove(self.bomb)
+        return True
+
+class Explosion(Entity):
+    def __init__(self,pos,world):
+        super().__init__(pos)
+        self.world=world
+        self.radius=10
+        self.mradius=1500
+        self.alpha=255
+    @classmethod
+    def info(cls):
+        return ()
+    def habit(self):
+        return [NuclearBomber(self)]
+    def surface(self):
+        size=int(self.radius*0.5)
+        sf=pygame.transform.scale(pygame.image.load('images/suwooattack.png'),(size,size))
+        sf.set_alpha(self.alpha)
+        return sf
+
+class NuclearBomber(Behaves):
+    def __init__(self,explosion):
+        self.explosion=explosion
+    def act(self,world):
+        self.explosion.radius+=8
+        self.explosion.alpha-=1
+        for entity in world.entities:
+            if not isinstance(entity,Animal) or entity.isdead: continue
+            if entity.pos.distance_to(self.explosion.pos)<=self.explosion.radius:
+                entity.hp=0
+        if self.explosion.radius >= self.explosion.mradius or self.explosion.alpha <= 0:
+            self.explosion.isdead = True
+            world.remove(self.explosion)
