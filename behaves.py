@@ -1,4 +1,4 @@
-from base import Behaves, Animal, Entity, World, Carcass,addlog,Nuclear,Explosion
+from base import Behaves, Animal, Entity, World, Carcass,addlog,Nuclear,Explosion,normalize
 from animals import *
 from pygame import Vector2
 import random as r
@@ -59,13 +59,13 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             return False
 
         direction = target.pos - self.actor.pos
-        if direction.length() > 0:
-            direction = direction.normalize()
+        if direction.length() > 30:
+            direction = normalize(direction)
             speed = self.actor.speed
             goto = self.actor.pos + direction * speed
-            self.actor.move(speed, goto)
-            
-        return True
+            self.actor.move(speed, goto)            
+            return True
+        return False
     
 class GAZELLE_MOVE_TO_GAZELLE(Behaves):
     def __init__(self, actor: Animal):
@@ -82,21 +82,21 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
             return False
         
         direction = target.pos - self.actor.pos
-        if direction.length() > 0:
-            direction = direction.normalize()
+        if direction.length() > 30:
+            direction=normalize(direction)
             speed = self.actor.speed
             goto = self.actor.pos + direction * speed
-            self.actor.move(speed, goto)
-            
-        return True
+            self.actor.move(speed, goto)            
+            return True
+        return False
 
 class CHARGE_RUSH(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
-        self.detect_radius = 150.0  
+        self.detect_radius = 60.0  
         self.damage_radius = 20.0   
-        self.rush_speed_mult = 2.5  
-        self.collision_damage = 10  
+        self.rush_speed_mult = 2  
+        self.collision_damage = 1  
 
     def act(self, world: World):
         predator_names = ["Lion", "Hyena"] 
@@ -110,13 +110,10 @@ class CHARGE_RUSH(Behaves):
         for p in predators:
             escape_dir += (self.actor.pos - p.pos)
         
-        if escape_dir.length() > 0:
-            escape_dir = escape_dir.normalize()
-        else:
-            escape_dir = pygame.Vector2(1, 0) 
+        escape_dir=normalize(escape_dir)
 
         rush_speed = self.actor.speed * self.rush_speed_mult
-        goto = self.actor.pos + (escape_dir * rush_speed)
+        goto = self.actor.pos + (escape_dir * rush_speed/2)
         
         self.actor.move(rush_speed, goto)
 
@@ -142,7 +139,7 @@ class ATTACK_TARGET(Behaves):
                 return False
 
             if self.predator.pos.distance_to(target.pos) > 15:
-                self.predator.move(self.predator.speed * 1.3, self.predator.pos+(target.pos-self.predator.pos).normalize()*2.5)
+                self.predator.move(self.predator.speed * 1.3, self.predator.pos+normalize(target.pos-self.predator.pos)*2.5)
             else:
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
@@ -154,10 +151,10 @@ class EAT_GRASS(Behaves):
         self.eater=eater
     def act(self,world:World):
         grassx,grassy=world.wheregrass(self.eater)
-        if world.grass_map[grassy][grassx].remain<=10 or self.eater.hunger>35:
+        if world.grass_map[grassy][grassx].remain<=1 or self.eater.hunger>self.eater.MAXHUNGER*0.9:
             return False
-        self.eater.hunger+=1
-        world.grass_map[grassy][grassx].remain-=0.5
+        self.eater.hunger+=0.05
+        world.grass_map[grassy][grassx].remain-=1
         return True
 
 class EAT_CARCASS(Behaves):
@@ -165,7 +162,7 @@ class EAT_CARCASS(Behaves):
         self.actor=actor
 
     def act(self, world: World):
-        if self.actor.hunger > self.actor.MAXHUNGER * 0.7:
+        if self.actor.hunger > self.actor.MAXHUNGER * 0.9:
             return False
         
         target = world. findnearesttarget(self.actor, Carcass, findrange=self.actor.sight)
@@ -176,7 +173,7 @@ class EAT_CARCASS(Behaves):
                 return False
         #시체 근처로 이동 후 섭취
             if self.actor.pos.distance_to(target.pos) > 10:
-                self.actor.move(self.actor.speed,target.pos)
+                self.actor.move(self.actor.speed,self.actor.pos+normalize(target.pos-self.actor.pos))
             else:
                 target.remain-=0.2
                 self.actor.hunger+=0.5
@@ -311,11 +308,12 @@ class RUNAWAY(Behaves):
         )
 
         if elephant is not None:
-            self.actor.move(self.actor.speed, elephant.pos)
+            if elephant.pos.distance_to(self.actor.pos)<30: return False
+            self.actor.move(self.actor.speed*1.2, self.actor.pos+normalize(elephant.pos-self.actor.pos)*3)
         else:
             # 포식자 반대 방향으로 한 스텝 — move()가 방향+거리 계산하므로
             # 현재 pos에서 충분히 먼 반대 지점을 목표로 넘긴다
-            away = self.actor.pos + (self.actor.pos - predator.pos).normalize() * 2
+            away = self.actor.pos + normalize(self.actor.pos - predator.pos) * 2
             self.actor.move(self.actor.speed, away)
 
         return True
@@ -325,6 +323,7 @@ class RUNAWAY(Behaves):
 class WANDER(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
+        self.predir=Vector2(0,0)
 
     def act(self, world: World):
         from animals import Elephant
@@ -337,21 +336,21 @@ class WANDER(Behaves):
             escape_dir = self.actor.pos - elephant.pos
             if escape_dir.length() > 0:
                 # 코끼리 반대 방향으로 안전거리를 확보할 수 있는 목표 지점 설정
-                target_pos = self.actor.pos + escape_dir.normalize() * 60
+                target_pos = self.actor.pos + normalize(escape_dir) * 2
                 
                 # 코끼리를 피해 일반 속도로 이동
                 self.actor.move(self.actor.speed, target_pos)
                 return True
 
-        if r.random() < 0.1:
-            random_offset = Vector2(r.randint(-30, 30), r.randint(-30, 30))
-            target_pos = self.actor.pos + random_offset
-            
-            # 화면 경계 밖으로 나가지 않도록 보정
-            target_pos.x = max(10, min(1190, target_pos.x))
-            target_pos.y = max(10, min(740, target_pos.y))
-            
-            self.actor.move(self.actor.speed, target_pos)
+        if r.random() < 0.95:
+            if self.predir.length_squared() == 0:
+                target_pos=Vector2(1, 0).rotate(r.uniform(0, 360))
+            else:
+                angle = self.predir.as_polar()[1]
+                delta = r.gauss(0, 10)
+                target_pos=Vector2(1, 0).rotate(angle + delta)
+            self.predir=target_pos
+            self.actor.move(self.actor.speed, self.actor.pos+target_pos*2+self.predir*3)
             return True
             
         return False

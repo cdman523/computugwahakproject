@@ -26,7 +26,7 @@ class World:
     def __init__(self):
         self.entity_map: dict["Entity", pygame.Vector2] = dict()
         self.grass_map = [
-            [Grass(r.randint(70, 100)) for _ in range(16)] for _ in range(10)
+            [Grass(r.uniform(5, 10)) for _ in range(16)] for _ in range(10)
         ]
 
     @property
@@ -48,12 +48,12 @@ class World:
                             entity.hunger-=0.01
                             if entity.hunger<=0:
                                 entity.hp-=0.05
-                            elif entity.hunger>=entity.MAXHUNGER*0.9:
-                                entity.hp+=0.1
+                            elif entity.hunger>=entity.MAXHUNGER*0.8:
+                                entity.hp+=0.02
                         break
         for gra in self.grass_map:
             for ss in gra:
-                ss.grow(r.uniform(0.1,1.5))
+                ss.grow(r.uniform(0.01,0.05)*(r.randint(1,int(ss.remain)+10)==1))
 
     def remove(self, entity: "Entity"):
         del self.entity_map[entity]
@@ -102,7 +102,7 @@ class Animal(Entity):
         self.maxhp=self.hp = hp
         self.attack = attack
         self.defense = defense
-        self.hunger = hunger
+        self.MAXHUNGER=self.hunger = hunger
         self.speed = speed
         self.sight = sight
         self.pos = pos
@@ -192,10 +192,17 @@ class Grass:
 
     def grow(self, val):
         self.remain += val
+        if self.remain>10:
+            self.remain=10
 
 def addlog(txt):
     with open('log.txt','a',encoding='UTF-8') as f:
         f.write(txt+'\n')
+
+def normalize(v:pygame.Vector2):
+    if v.length_squared()<1e-8:
+        return pygame.Vector2(1,0).rotate(r.uniform(0,360))
+    return v.normalize()
 
 class Nuclear(Entity):
     layer=100

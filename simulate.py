@@ -16,6 +16,7 @@ class Simulator:
         self.xspeed=1
         self.timecount=0
         self.pause=False
+        self.grassmap=False
         with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
         self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
@@ -84,6 +85,8 @@ class Simulator:
                     self.world.summon(Nuclear,mousepos)
                 elif event.key==pygame.K_x:
                     print(self.world.entities)
+                elif event.key==pygame.K_c:
+                    self.grassmap=not self.grassmap
     def draw_background(self):
         self.screen.blit(
             pygame.transform.scale(
@@ -161,3 +164,31 @@ class Simulator:
 
     def draw_UI(self):
         self.draw_text(self.screen,f'{self.xspeed:.2f}배속'+('(일시정지됨)' if self.pause else ''),0,0,30)
+        if self.grassmap:
+            CELL_SIZE = 75
+
+            for y in range(10):
+                for x in range(16):
+
+                    rect = pygame.Rect(
+                        x * CELL_SIZE,
+                        y * CELL_SIZE,
+                        CELL_SIZE,
+                        CELL_SIZE
+                    )
+
+                    pygame.draw.rect(
+                        self.screen,
+                        (100, 100, 100),
+                        rect,
+                        1
+                    )
+                        
+
+                    self.draw_text(
+                        self.screen,
+                        f'{self.world.grass_map[y][x].remain:.2f}',
+                        rect.x + CELL_SIZE/2-10,
+                        rect.y + CELL_SIZE/2-10,
+                        10
+                    )
