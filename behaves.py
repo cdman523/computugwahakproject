@@ -323,37 +323,70 @@ class RUNAWAY(Behaves):
 class WANDER(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
-        self.predir=Vector2(0,0)
 
     def act(self, world: World):
-        from animals import Elephant
-        
-        # 주변에 코끼리가 있는지 먼저 감지
-        elephant = world.findnearesttarget(self.actor, Elephant, findrange=100)
-        
-        if elephant:
-            # 코끼리가 있으면 코끼리의 반대 방향으로 도망침
-            escape_dir = self.actor.pos - elephant.pos
-            if escape_dir.length() > 0:
-                # 코끼리 반대 방향으로 안전거리를 확보할 수 있는 목표 지점 설정
-                target_pos = self.actor.pos + normalize(escape_dir) * 2
-                
-                # 코끼리를 피해 일반 속도로 이동
-                self.actor.move(self.actor.speed, target_pos)
-                return True
 
-        if r.random() < 0.95:
-            if self.predir.length_squared() == 0:
-                target_pos=Vector2(1, 0).rotate(r.uniform(0, 360))
-            else:
-                angle = self.predir.as_polar()[1]
-                delta = r.gauss(0, 10)
-                target_pos=Vector2(1, 0).rotate(angle + delta)
-            self.predir=target_pos
-            self.actor.move(self.actor.speed, self.actor.pos+target_pos*2+self.predir*3)
+        # 처음 방향 초기화
+        if self.actor.dir.length_squared() == 0:
+            self.actor.dir = Vector2(1, 0).rotate(
+                r.uniform(0, 360)
+            )
+
+        # 3% 확률로 잠깐 멈춤
+        if r.random() < 0.03:
             return True
-            
-        return False
+
+        # 현재 방향 기준으로 조금만 흔들기
+        angle = self.actor.dir.as_polar()[1]
+        delta = r.gauss(0, 10)
+
+        new_dir = Vector2(1, 0).rotate(
+            angle + delta
+        )
+
+        # 기존 방향에 높은 가중치
+        self.actor.dir = (
+            self.actor.dir * 0.6 +
+            new_dir * 0.4
+        )
+
+        # 정규화
+        if self.actor.dir.length_squared() > 0:
+            self.actor.dir = self.actor.dir.normalize()
+
+        # 이동 목표
+        target = (
+            self.actor.pos
+            + self.actor.dir * self.actor.speed
+        )
+
+        # 벽 회피
+        margin = 50
+
+        if target.x < margin:
+            self.actor.dir.x = abs(self.actor.dir.x)
+
+        elif target.x > 1200 - margin:
+            self.actor.dir.x = -abs(self.actor.dir.x)
+
+        if target.y < margin:
+            self.actor.dir.y = abs(self.actor.dir.y)
+
+        elif target.y > 750 - margin:
+            self.actor.dir.y = -abs(self.actor.dir.y)
+
+        # 아주 가끔 크게 방향 변경
+        if r.random() < 0.03:
+            self.actor.dir.rotate_ip(
+                r.uniform(-120, 120)
+            )
+
+        self.actor.move(
+            self.actor.speed,
+            self.actor.pos + self.actor.dir * self.actor.speed
+        )
+
+        return True
 
 class ATTACK_LION_WHEN_MANY(Behaves):
     def __init__(self,actor: Animal):

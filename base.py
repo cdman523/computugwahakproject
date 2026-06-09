@@ -107,7 +107,8 @@ class Animal(Entity):
         self.sight = sight
         self.pos = pos
         self.world = world
-        
+        self.dir=pygame.Vector2(1,0).rotate(r.uniform(0,360))
+
     @property
     def hp(self):
         return self._hp
