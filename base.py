@@ -149,6 +149,7 @@ class Animal(Entity):
 
 class Carcass(Entity):
     layer=0
+    IMAGE=pygame.image.load("images/carcas.png")
     def __init__(self, remain: float, pos: "pygame.Vector2", world):
         self.remain = remain
         self.pos = pos
@@ -163,7 +164,7 @@ class Carcass(Entity):
 
     def surface(self):
         sf = pygame.transform.scale(
-            pygame.image.load("images/carcas.png"), (90, 90)
+            self.IMAGE, (90, 90)
         )
         sf.set_alpha(int(self.remain * 255 / 100))
         return sf
@@ -198,6 +199,7 @@ def addlog(txt):
 
 class Nuclear(Entity):
     layer=100
+    IMAGE=pygame.image.load('images/suwoobomb.png')
     def __init__(self,pos,world):
         self.isdead=False
         super().__init__(pygame.Vector2(pos.x,-100))
@@ -213,7 +215,7 @@ class Nuclear(Entity):
     def habit(self):
         return [BombFall(self)]
     def surface(self):
-        return pygame.transform.scale(pygame.image.load('images/suwoobomb.png'),(200,200))
+        return pygame.transform.scale(self.IMAGE,(200,200))
     
 class BombFall(Behaves):
     def __init__(self,bomb):
@@ -228,11 +230,12 @@ class BombFall(Behaves):
 
 class Explosion(Entity):
     layer=50
+    IMAGE=pygame.image.load("images/suwooattack1.png")
     def __init__(self,pos,world):
         super().__init__(pos)
         self.world=world
-        self.radius=10
-        self.mradius=1500
+        self.radius=50
+        self.mradius=800
         self.alpha=255
         addlog(f'목표 지점 : {pos.x}, {pos.y} 명중')
     @classmethod
@@ -269,9 +272,9 @@ class Explosion(Entity):
                 )
 
         # 폭발 이미지
-        img_size = max(10, int(self.radius * 0.5))
+        img_size = max(10, int(self.radius))
         img = pygame.transform.scale(
-            pygame.image.load("images/suwooattack.png"),
+            self.IMAGE,
             (img_size, img_size)
         )
 
@@ -286,11 +289,11 @@ class NuclearBomber(Behaves):
     def __init__(self,explosion):
         self.explosion=explosion
     def act(self,world):
-        self.explosion.radius+=6
-        self.explosion.alpha-=1
+        self.explosion.radius+=7
+        self.explosion.alpha-=3
         for entity in world.entities:
             if not isinstance(entity,Animal) or entity.isdead: continue
-            if entity.pos.distance_to(self.explosion.pos)<=self.explosion.radius:
+            if self.explosion.radius>=entity.pos.distance_to(self.explosion.pos-pygame.Vector2(0,self.explosion.radius*0.15))>=self.explosion.radius-60:
                 entity.hp=0
         if self.explosion.radius >= self.explosion.mradius or self.explosion.alpha <= 0:
             self.explosion.isdead = True

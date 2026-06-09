@@ -9,11 +9,12 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
     Animal
 ):
     ENUM=0
+    IMAGE=pygame.image.load("images/testimage0.png")
     def habit(self):
         return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
 
     def surface(self):
-        return pygame.transform.scale(pygame.image.load("images/bufalo.png"), (60, 60))
+        return pygame.transform.scale(self.IMAGE, (60, 60))
 
     @classmethod
     def info(cls):
@@ -26,7 +27,7 @@ def clamp(value, min_val, max_val):
 
 class Buffalo(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load("images/bufalo.png")
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -45,13 +46,13 @@ class Buffalo(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load("images/bufalo.png"), (60, 60)
+            self.IMAGE, (60, 60)
         )
 
 
 class Gazelle(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load("images/gazel.png")
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -70,13 +71,13 @@ class Gazelle(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load("images/gazel.png"), (60, 60)
+            self.IMAGE, (60, 60)
         )
 
 
 class Hyena(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load("images/hyena.png")
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -95,13 +96,13 @@ class Hyena(Animal):
     
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load("images/hyena.png"), (60, 60)
+            self.IMAGE, (60, 60)
         )
 
 
 class Lion(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load("images/lion0.png")
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -127,13 +128,13 @@ class Lion(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load("images/lion0.png"), (60, 60)
+            self.IMAGE, (60, 60)
         )
 
 
 class Zebra(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load("images/zebra.png")
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -157,13 +158,13 @@ class Zebra(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load("images/zebra.png"), (60, 60)
+            self.IMAGE, (60, 60)
         )
 
 
 class Elephant(Animal):
     ENUM = 0
-
+    IMAGE=pygame.image.load('images/alephant.png')
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -182,5 +183,5 @@ class Elephant(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            pygame.image.load('images/alephant.png'), (60, 60)
+            self.IMAGE, (60, 60)
         )

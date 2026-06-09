@@ -72,10 +72,14 @@ class Simulator:
                     self.xspeed+=0.1
                 elif event.key==pygame.K_DOWN:
                     self.xspeed-=0.1
+                    if self.xspeed<=0:
+                        self.xspeed=0.1
                 elif event.key==pygame.K_RIGHT:
                     self.xspeed+=1
                 elif event.key==pygame.K_LEFT:
                     self.xspeed-=1
+                    if self.xspeed<=0:
+                        self.xspeed=0.1
                 elif event.key==pygame.K_z:
                     self.world.summon(Nuclear,mousepos)
                 elif event.key==pygame.K_x:
@@ -96,7 +100,7 @@ class Simulator:
                 continue
             if isinstance(e,Animal):
                 self.draw_bar(e,loc,surface)
-            rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.15)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
+            rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.3)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
             self.screen.blit(surface, rect)
     
     def draw_bar(self,entity,pos,surface):

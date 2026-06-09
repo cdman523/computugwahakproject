@@ -1,54 +1,74 @@
 대서우1을(를) 소환했습니다.
-NUCLEAR LAUNCH DETECTED
-NUCLEAR LAUNCH DETECTED
-NUCLEAR LAUNCH DETECTED
-NUCLEAR LAUNCH DETECTED
-목표 지점 : 960.0, 350.0 명중
-NUCLEAR LAUNCH DETECTED
-목표 지점 : 494.0, 450.0 명중
-목표 지점 : 309.0, 560.0 명중
+코끼리1을(를) 소환했습니다.
 사자1을(를) 소환했습니다.
-목표 지점 : 656.0, 610.0 명중
-목표 지점 : 765.0, 530.0 명중
-사자2을(를) 소환했습니다.
-사자2이(가) 사망했습니다.
-사자1이(가) 사망했습니다.
-대서우1이(가) 사망했습니다.
-사자3을(를) 소환했습니다.
-사자3이(가) 사망했습니다.
-사자4을(를) 소환했습니다.
-사자4이(가) 사망했습니다.
-사자5을(를) 소환했습니다.
-사자5이(가) 사망했습니다.
-사자6을(를) 소환했습니다.
-사자6이(가) 사망했습니다.
-사자7을(를) 소환했습니다.
-사자7이(가) 사망했습니다.
-사자8을(를) 소환했습니다.
-사자8이(가) 사망했습니다.
-사자9을(를) 소환했습니다.
-사자9이(가) 사망했습니다.
-사자10을(를) 소환했습니다.
-사자10이(가) 사망했습니다.
-사자11을(를) 소환했습니다.
-사자11이(가) 사망했습니다.
-사자12을(를) 소환했습니다.
-사자12이(가) 사망했습니다.
-사자13을(를) 소환했습니다.
-사자13이(가) 사망했습니다.
-사자14을(를) 소환했습니다.
-사자14이(가) 사망했습니다.
-사자15을(를) 소환했습니다.
-사자15이(가) 사망했습니다.
-사자16을(를) 소환했습니다.
-사자16이(가) 사망했습니다.
-사자17을(를) 소환했습니다.
-사자18을(를) 소환했습니다.
-사자19을(를) 소환했습니다.
-사자20을(를) 소환했습니다.
+하이에나1을(를) 소환했습니다.
+코끼리2을(를) 소환했습니다.
+하이에나2을(를) 소환했습니다.
+코끼리3을(를) 소환했습니다.
+물소1을(를) 소환했습니다.
+코끼리4을(를) 소환했습니다.
 NUCLEAR LAUNCH DETECTED
-목표 지점 : 980.0, 200.0 명중
-사자19이(가) 사망했습니다.
-사자18이(가) 사망했습니다.
-사자20이(가) 사망했습니다.
-사자17이(가) 사망했습니다.
+목표 지점 : 830.0, 660.0 명중
+코끼리2이(가) 사망했습니다.
+하이에나1이(가) 사망했습니다.
+사자1이(가) 사망했습니다.
+코끼리3이(가) 사망했습니다.
+코끼리1이(가) 사망했습니다.
+코끼리4이(가) 사망했습니다.
+물소1이(가) 사망했습니다.
+대서우1이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 835.0, 630.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 835.0, 630.0 명중
+목표 지점 : 835.0, 630.0 명중
+목표 지점 : 835.0, 630.0 명중
+목표 지점 : 835.0, 630.0 명중
+목표 지점 : 835.0, 630.0 명중
+목표 지점 : 835.0, 630.0 명중
+하이에나2이(가) 사망했습니다.
+목표 지점 : 835.0, 630.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 835.0, 630.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 475.0, 300.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 475.0, 300.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 499.0, 300.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 584.0, 310.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 681.0, 320.0 명중
+목표 지점 : 748.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 761.0, 370.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 763.0, 400.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 750.0, 410.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 728.0, 420.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 698.0, 420.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 661.0, 430.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 602.0, 450.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 544.0, 480.0 명중
+목표 지점 : 515.0, 500.0 명중
+목표 지점 : 466.0, 510.0 명중
+목표 지점 : 405.0, 520.0 명중
+목표 지점 : 344.0, 520.0 명중
