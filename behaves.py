@@ -66,7 +66,7 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             self.actor.move(speed, goto)
             
         return True
-
+    
 class GAZELLE_MOVE_TO_GAZELLE(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
