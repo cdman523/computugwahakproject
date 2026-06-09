@@ -10,6 +10,10 @@ class Simulator:
 
     def __init__(self):
         pygame.init()
+        info = pygame.display.Info()
+
+        self.fullSCREEN_H = info.current_w
+        self.fullSCREEN_W = info.current_h
         self.world = World()
         self.running = False
         self.clock = pygame.time.Clock()
@@ -19,11 +23,7 @@ class Simulator:
         self.grassmap=False
         with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
-        self.screen = pygame.display.set_mode((self.SCREEN_H, self.SCREEN_W))
-        self.world.summon(
-            ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
-            pygame.Vector2(40, 100),
-        )
+        self.screen = pygame.display.set_mode((self.fullSCREEN_H,self.fullSCREEN_W))
 
     def run(self):
         self.running = True
@@ -48,7 +48,9 @@ class Simulator:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 mousepos=pygame.Vector2(pygame.mouse.get_pos())
-                if event.key == pygame.K_0:
+                if mousepos.x>self.SCREEN_H-50 or mousepos.x<50 or mousepos.y>self.SCREEN_W-50 or mousepos.y<50:
+                    pass
+                elif event.key == pygame.K_0:
                     self.world.summon(
                         ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
                         mousepos,
@@ -84,10 +86,15 @@ class Simulator:
                 elif event.key==pygame.K_z:
                     self.world.summon(Nuclear,mousepos)
                 elif event.key==pygame.K_x:
+                    pass
+                elif event.key==pygame.K_SLASH:
                     print(self.world.entities)
                 elif event.key==pygame.K_c:
                     self.grassmap=not self.grassmap
+                elif event.key==pygame.K_ESCAPE:
+                    self.running=False
     def draw_background(self):
+        self.screen.fill((80,80,80))
         self.screen.blit(
             pygame.transform.scale(
                 pygame.image.load("images/gbg1.png"),

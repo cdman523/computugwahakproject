@@ -131,8 +131,8 @@ class Animal(Entity):
 
 
     def move(self, speed, goto: pygame.Vector2):
-        if goto.x<20 or goto.x>1180 or goto.y<20 or goto.y>730:
-            return self.move(speed,pygame.Vector2(max(min(1180,goto.x),20),max(min(730,goto.y),20)))
+        if goto.x<50 or goto.x>1150 or goto.y<50 or goto.y>700:
+            return self.move(speed,pygame.Vector2(max(min(1150,goto.x),50),max(min(700,goto.y),50)))
         self.pos = goto
         if speed > self.speed:
             self.hunger -= (speed-self.speed)/self.speed
