@@ -30,7 +30,9 @@ class Buffalo(Animal):
         return pygame.transform.scale(
             pygame.image.load("images/bufalo.png"), (60, 60)
         )
-
+    def info(cls):
+        cls.ENUM += 1
+        return (f"물소{cls.ENUM}", 350, 38, 70, 20, 3, 130)
     @classmethod
     def info(cls):
         cls.ENUM+=1
@@ -45,7 +47,9 @@ class Gazelle(Animal):
         return pygame.transform.scale(
             pygame.image.load("images/gazel.png"), (60, 60)
         )
-
+    def info(cls):
+        cls.ENUM += 1
+        return (f"가젤{cls.ENUM}", 80, 8, 15, 20, 6, 110)
     @classmethod
     def info(cls):
         cls.ENUM+=1
@@ -60,7 +64,10 @@ class Hyena(Animal):
         return pygame.transform.scale(
             pygame.image.load("images/hyena.png"), (60, 60)
         )
-    
+    def info(cls):
+        cls.ENUM += 1
+        return (f"하이에나{cls.ENUM}", 120, 30, 25, 60, 4, 140)
+
     @classmethod
     def info(cls):
         cls.ENUM+=1
@@ -98,7 +105,7 @@ class Zebra(Animal):
     @classmethod
     def info(cls):
         cls.ENUM+=1
-        return (f"얼룩말{cls.ENUM}", 80, 5, 5, 80, 5, 200)  # sight가 Lion보다 넓음
+        return (f"얼룩말{cls.ENUM}", 130, 20, 30, 25, 5, 200)  # sight가 Lion보다 넓음
 
     def habit(self):
         return [
@@ -124,3 +131,6 @@ class Elephant(Animal):
         return [WANDER(self)]
     def surface(self):
         return pygame.transform.scale(pygame.image.load('images/alephant.png'),(60,60))
+    def info(cls):
+        cls.ENUM += 1
+        return (f"코끼리{cls.ENUM}", 700, 55, 120, 20, 2, 120)
