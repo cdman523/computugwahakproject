@@ -151,10 +151,10 @@ class EAT_GRASS(Behaves):
         self.eater=eater
     def act(self,world:World):
         grassx,grassy=world.wheregrass(self.eater)
-        if world.grass_map[grassy][grassx].remain<=1 or self.eater.hunger>self.eater.MAXHUNGER*0.9:
+        if world.grass_map[grassy][grassx].remain<=0.5 or self.eater.hunger>self.eater.MAXHUNGER*0.9:
             return False
-        self.eater.hunger+=0.05
-        world.grass_map[grassy][grassx].remain-=1
+        self.eater.hunger+=0.2
+        world.grass_map[grassy][grassx].remain-=0.2
         return True
 
 class EAT_CARCASS(Behaves):
@@ -177,7 +177,7 @@ class EAT_CARCASS(Behaves):
             else:
                 target.remain-=0.2
                 self.actor.hunger+=0.5
-                self.actor.hp+=1
+                self.actor.hp+=0.1
             return True
         return False
 class LION_GUARD_CARCASS(Behaves):

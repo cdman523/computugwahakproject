@@ -179,7 +179,7 @@ class Elephant(Animal):
         return (f"코끼리{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [WANDER(self)]
+        return [EAT_GRASS(self),WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(

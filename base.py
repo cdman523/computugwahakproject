@@ -26,7 +26,7 @@ class World:
     def __init__(self):
         self.entity_map: dict["Entity", pygame.Vector2] = dict()
         self.grass_map = [
-            [Grass(r.uniform(5, 10)) for _ in range(16)] for _ in range(10)
+            [Grass(r.uniform(10, 20)) for _ in range(16)] for _ in range(10)
         ]
 
     @property
@@ -45,7 +45,7 @@ class World:
                 for a in entity.habit():
                     if a.act(self):
                         if isinstance(entity,Animal):
-                            entity.hunger-=0.01
+                            entity.hunger-=0.05
                             if entity.hunger<=0:
                                 entity.hp-=0.05
                             elif entity.hunger>=entity.MAXHUNGER*0.8:
@@ -53,7 +53,7 @@ class World:
                         break
         for gra in self.grass_map:
             for ss in gra:
-                ss.grow(r.uniform(0.01,0.05)*(r.randint(1,int(ss.remain)+10)==1))
+                ss.grow(r.uniform(0.01,0.05)*(r.randint(1,int(ss.remain)+5)==1))
 
     def remove(self, entity: "Entity"):
         del self.entity_map[entity]
@@ -192,8 +192,8 @@ class Grass:
 
     def grow(self, val):
         self.remain += val
-        if self.remain>10:
-            self.remain=10
+        if self.remain>20:
+            self.remain=20
 
 def addlog(txt):
     with open('log.txt','a',encoding='UTF-8') as f:

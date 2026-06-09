@@ -1,73 +1,583 @@
 대서우1을(를) 소환했습니다.
-하이에나1을(를) 소환했습니다.
 사자1을(를) 소환했습니다.
 물소1을(를) 소환했습니다.
 사자2을(를) 소환했습니다.
 얼룩말1을(를) 소환했습니다.
-사자3을(를) 소환했습니다.
-사자4을(를) 소환했습니다.
-가젤1을(를) 소환했습니다.
-사자5을(를) 소환했습니다.
-코끼리1을(를) 소환했습니다.
-코끼리2을(를) 소환했습니다.
-사자6을(를) 소환했습니다.
-코끼리3을(를) 소환했습니다.
-코끼리4을(를) 소환했습니다.
-코끼리5을(를) 소환했습니다.
-코끼리6을(를) 소환했습니다.
-코끼리7을(를) 소환했습니다.
 물소2을(를) 소환했습니다.
-사자7을(를) 소환했습니다.
-얼룩말2을(를) 소환했습니다.
+하이에나1을(를) 소환했습니다.
+가젤1을(를) 소환했습니다.
 하이에나2을(를) 소환했습니다.
-사자8을(를) 소환했습니다.
-가젤2을(를) 소환했습니다.
+얼룩말2을(를) 소환했습니다.
 하이에나3을(를) 소환했습니다.
-가젤3을(를) 소환했습니다.
-하이에나4을(를) 소환했습니다.
-하이에나5을(를) 소환했습니다.
-가젤4을(를) 소환했습니다.
-사자9을(를) 소환했습니다.
-얼룩말3을(를) 소환했습니다.
-사자10을(를) 소환했습니다.
-얼룩말4을(를) 소환했습니다.
-대서우1이(가) 사망했습니다.
-사자11을(를) 소환했습니다.
-얼룩말5을(를) 소환했습니다.
-코끼리8을(를) 소환했습니다.
 물소3을(를) 소환했습니다.
-사자12을(를) 소환했습니다.
-사자13을(를) 소환했습니다.
-가젤5을(를) 소환했습니다.
-하이에나6을(를) 소환했습니다.
-가젤6을(를) 소환했습니다.
-하이에나7을(를) 소환했습니다.
-얼룩말6을(를) 소환했습니다.
-가젤7을(를) 소환했습니다.
-하이에나8을(를) 소환했습니다.
-얼룩말7을(를) 소환했습니다.
+얼룩말3을(를) 소환했습니다.
+하이에나4을(를) 소환했습니다.
 물소4을(를) 소환했습니다.
-하이에나9을(를) 소환했습니다.
-하이에나10을(를) 소환했습니다.
-사자14을(를) 소환했습니다.
-코끼리9을(를) 소환했습니다.
-사자15을(를) 소환했습니다.
+사자3을(를) 소환했습니다.
 물소5을(를) 소환했습니다.
+얼룩말4을(를) 소환했습니다.
+물소6을(를) 소환했습니다.
+가젤2을(를) 소환했습니다.
+물소7을(를) 소환했습니다.
+하이에나5을(를) 소환했습니다.
+얼룩말5을(를) 소환했습니다.
+대서우1이(가) 사망했습니다.
+얼룩말6을(를) 소환했습니다.
+하이에나6을(를) 소환했습니다.
+얼룩말7을(를) 소환했습니다.
+사자4을(를) 소환했습니다.
+하이에나7을(를) 소환했습니다.
+물소8을(를) 소환했습니다.
+사자5을(를) 소환했습니다.
+하이에나8을(를) 소환했습니다.
+사자6을(를) 소환했습니다.
+물소9을(를) 소환했습니다.
+코끼리1을(를) 소환했습니다.
+사자7을(를) 소환했습니다.
+물소10을(를) 소환했습니다.
+사자8을(를) 소환했습니다.
 얼룩말8을(를) 소환했습니다.
-가젤5이(가) 사망했습니다.
+하이에나9을(를) 소환했습니다.
+가젤3을(를) 소환했습니다.
+얼룩말9을(를) 소환했습니다.
+하이에나10을(를) 소환했습니다.
+사자1이(가) 사망했습니다.
+얼룩말10을(를) 소환했습니다.
+물소11을(를) 소환했습니다.
+하이에나11을(를) 소환했습니다.
+얼룩말11을(를) 소환했습니다.
+하이에나12을(를) 소환했습니다.
+물소12을(를) 소환했습니다.
+얼룩말12을(를) 소환했습니다.
+사자9을(를) 소환했습니다.
+하이에나13을(를) 소환했습니다.
+사자10을(를) 소환했습니다.
+물소13을(를) 소환했습니다.
+사자11을(를) 소환했습니다.
+사자3이(가) 사망했습니다.
+물소14을(를) 소환했습니다.
+사자12을(를) 소환했습니다.
+얼룩말13을(를) 소환했습니다.
+하이에나14을(를) 소환했습니다.
+물소15을(를) 소환했습니다.
+코끼리2을(를) 소환했습니다.
+하이에나15을(를) 소환했습니다.
+사자13을(를) 소환했습니다.
+물소16을(를) 소환했습니다.
+사자14을(를) 소환했습니다.
+얼룩말14을(를) 소환했습니다.
+하이에나16을(를) 소환했습니다.
+사자15을(를) 소환했습니다.
+얼룩말3이(가) 사망했습니다.
+얼룩말6이(가) 사망했습니다.
+얼룩말8이(가) 사망했습니다.
+물소6이(가) 사망했습니다.
+얼룩말9이(가) 사망했습니다.
+물소15이(가) 사망했습니다.
 사자15이(가) 사망했습니다.
 사자7이(가) 사망했습니다.
+사자6이(가) 사망했습니다.
+사자11이(가) 사망했습니다.
 물소4이(가) 사망했습니다.
-대서우2을(를) 소환했습니다.
-대서우3을(를) 소환했습니다.
-대서우4을(를) 소환했습니다.
+가젤2이(가) 사망했습니다.
+가젤1이(가) 사망했습니다.
+사자13이(가) 사망했습니다.
+사자14이(가) 사망했습니다.
 사자12이(가) 사망했습니다.
-대서우5을(를) 소환했습니다.
-대서우6을(를) 소환했습니다.
-대서우7을(를) 소환했습니다.
-대서우8을(를) 소환했습니다.
-대서우9을(를) 소환했습니다.
-대서우10을(를) 소환했습니다.
-가젤4이(가) 사망했습니다.
-가젤7이(가) 사망했습니다.
-가젤6이(가) 사망했습니다.
+물소1이(가) 사망했습니다.
+얼룩말10이(가) 사망했습니다.
+사자9이(가) 사망했습니다.
+사자2이(가) 사망했습니다.
+사자10이(가) 사망했습니다.
+물소12이(가) 사망했습니다.
+얼룩말13이(가) 사망했습니다.
+얼룩말7이(가) 사망했습니다.
+얼룩말14이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+얼룩말2이(가) 사망했습니다.
+하이에나7이(가) 사망했습니다.
+하이에나11이(가) 사망했습니다.
+사자4이(가) 사망했습니다.
+물소8이(가) 사망했습니다.
+사자5이(가) 사망했습니다.
+사자8이(가) 사망했습니다.
+물소16이(가) 사망했습니다.
+물소7이(가) 사망했습니다.
+물소14이(가) 사망했습니다.
+물소3이(가) 사망했습니다.
+가젤3이(가) 사망했습니다.
+물소5이(가) 사망했습니다.
+하이에나9이(가) 사망했습니다.
+물소10이(가) 사망했습니다.
+물소13이(가) 사망했습니다.
+물소2이(가) 사망했습니다.
+물소11이(가) 사망했습니다.
+하이에나1이(가) 사망했습니다.
+하이에나3이(가) 사망했습니다.
+하이에나16이(가) 사망했습니다.
+하이에나5이(가) 사망했습니다.
+하이에나14이(가) 사망했습니다.
+물소9이(가) 사망했습니다.
+하이에나8이(가) 사망했습니다.
+하이에나12이(가) 사망했습니다.
+코끼리1이(가) 사망했습니다.
+하이에나10이(가) 사망했습니다.
+얼룩말5이(가) 사망했습니다.
+얼룩말1이(가) 사망했습니다.
+하이에나4이(가) 사망했습니다.
+얼룩말11이(가) 사망했습니다.
+얼룩말12이(가) 사망했습니다.
+코끼리2이(가) 사망했습니다.
+하이에나2이(가) 사망했습니다.
+하이에나6이(가) 사망했습니다.
+하이에나13이(가) 사망했습니다.
+하이에나15이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+얼룩말4이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 598.0, 390.0 명중
+목표 지점 : 598.0, 390.0 명중
+목표 지점 : 598.0, 390.0 명중
+코끼리3을(를) 소환했습니다.
+사자16을(를) 소환했습니다.
+코끼리4을(를) 소환했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 605.0, 340.0 명중
+코끼리4이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 603.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 603.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+코끼리3이(가) 사망했습니다.
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 580.0, 250.0 명중
+목표 지점 : 597.0, 350.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 572.0, 220.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 571.0, 220.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 574.0, 210.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 577.0, 210.0 명중
+사자16이(가) 사망했습니다.
+목표 지점 : 574.0, 200.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 568.0, 330.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 632.0, 310.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 565.0, 260.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 576.0, 270.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 605.0, 270.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 662.0, 270.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 735.0, 290.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 746.0, 300.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 749.0, 300.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 809.0, 340.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 820.0, 380.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 833.0, 440.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 825.0, 470.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 800.0, 490.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 739.0, 530.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 633.0, 540.0 명중
+목표 지점 : 534.0, 120.0 명중
+목표 지점 : 539.0, 530.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 449.0, 270.0 명중
+목표 지점 : 645.0, 110.0 명중
+목표 지점 : 468.0, 510.0 명중
+목표 지점 : 448.0, 450.0 명중
+목표 지점 : 441.0, 390.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 748.0, 150.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 811.0, 260.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 814.0, 400.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 414.0, 240.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 715.0, 530.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 717.0, 280.0 명중
+목표 지점 : 343.0, 430.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 529.0, 540.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 747.0, 430.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 486.0, 300.0 명중
+목표 지점 : 410.0, 400.0 명중
+목표 지점 : 672.0, 310.0 명중
+목표 지점 : 648.0, 560.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 471.0, 510.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 735.0, 440.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 526.0, 290.0 명중
+목표 지점 : 549.0, 590.0 명중
+목표 지점 : 410.0, 490.0 명중
+목표 지점 : 818.0, 410.0 명중
+목표 지점 : 688.0, 560.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 50.0, 700.0 명중
+목표 지점 : 934.0, 0.0 명중
+목표 지점 : 612.0, 150.0 명중
+목표 지점 : 268.0, 160.0 명중
+목표 지점 : 165.0, 710.0 명중
+목표 지점 : 238.0, 180.0 명중
+목표 지점 : 711.0, 190.0 명중
+목표 지점 : 190.0, 200.0 명중
+목표 지점 : 150.0, 220.0 명중
+목표 지점 : 246.0, 230.0 명중
+목표 지점 : 366.0, 230.0 명중
+목표 지점 : 111.0, 250.0 명중
+목표 지점 : 335.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 379.0, 260.0 명중
+목표 지점 : 462.0, 270.0 명중
+목표 지점 : 506.0, 280.0 명중
+목표 지점 : 17.0, 280.0 명중
+목표 지점 : 273.0, 290.0 명중
+목표 지점 : 177.0, 300.0 명중
+목표 지점 : 259.0, 320.0 명중
+목표 지점 : 308.0, 330.0 명중
+목표 지점 : 746.0, 350.0 명중
+목표 지점 : 168.0, 710.0 명중
+목표 지점 : 558.0, 400.0 명중
+목표 지점 : 554.0, 400.0 명중
+목표 지점 : 846.0, 420.0 명중
+목표 지점 : 673.0, 430.0 명중
+목표 지점 : 728.0, 430.0 명중
+목표 지점 : 601.0, 440.0 명중
+목표 지점 : 913.0, 440.0 명중
+목표 지점 : 473.0, 480.0 명중
+목표 지점 : 191.0, 500.0 명중
+목표 지점 : 899.0, 510.0 명중
+목표 지점 : 518.0, 520.0 명중
+목표 지점 : 818.0, 630.0 명중
+목표 지점 : 964.0, 630.0 명중
+목표 지점 : 668.0, 640.0 명중
+목표 지점 : 634.0, 680.0 명중
+목표 지점 : 249.0, 710.0 명중
+목표 지점 : 257.0, 710.0 명중
+목표 지점 : 506.0, 730.0 명중
+목표 지점 : 537.0, 730.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+목표 지점 : 697.0, 580.0 명중
+사자17을(를) 소환했습니다.
+하이에나17을(를) 소환했습니다.
+사자18을(를) 소환했습니다.
+물소17을(를) 소환했습니다.
+사자19을(를) 소환했습니다.
+하이에나18을(를) 소환했습니다.
+얼룩말15을(를) 소환했습니다.
+사자20을(를) 소환했습니다.
+하이에나19을(를) 소환했습니다.
+얼룩말16을(를) 소환했습니다.
+사자21을(를) 소환했습니다.
+물소18을(를) 소환했습니다.
+하이에나20을(를) 소환했습니다.
+사자22을(를) 소환했습니다.
+물소19을(를) 소환했습니다.
+사자23을(를) 소환했습니다.
+하이에나21을(를) 소환했습니다.
+얼룩말17을(를) 소환했습니다.
+사자24을(를) 소환했습니다.
+하이에나22을(를) 소환했습니다.
+물소20을(를) 소환했습니다.
+사자25을(를) 소환했습니다.
+하이에나23을(를) 소환했습니다.
+물소21을(를) 소환했습니다.
+사자26을(를) 소환했습니다.
+하이에나24을(를) 소환했습니다.
+물소22을(를) 소환했습니다.
+물소23을(를) 소환했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 1190.0, 740.0 명중
+물소17이(가) 사망했습니다.
+얼룩말15이(가) 사망했습니다.
+하이에나17이(가) 사망했습니다.
+물소21이(가) 사망했습니다.
+하이에나18이(가) 사망했습니다.
+하이에나20이(가) 사망했습니다.
+하이에나21이(가) 사망했습니다.
+하이에나19이(가) 사망했습니다.
+하이에나23이(가) 사망했습니다.
+하이에나22이(가) 사망했습니다.
+물소20이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 1.0, 20.0 명중
+얼룩말16이(가) 사망했습니다.
+얼룩말17이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 14.0, 730.0 명중
+물소22이(가) 사망했습니다.
+하이에나24이(가) 사망했습니다.
+물소18이(가) 사망했습니다.
+물소23이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 1186.0, 10.0 명중
+물소19이(가) 사망했습니다.
+사자17이(가) 사망했습니다.
+사자20이(가) 사망했습니다.
+사자24이(가) 사망했습니다.
+사자18이(가) 사망했습니다.
+사자23이(가) 사망했습니다.
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 1142.0, 70.0 명중
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+사자19이(가) 사망했습니다.
+사자21이(가) 사망했습니다.
+사자22이(가) 사망했습니다.
+사자25이(가) 사망했습니다.
+사자26이(가) 사망했습니다.
+목표 지점 : 558.0, 490.0 명중
+목표 지점 : 183.0, 560.0 명중
+목표 지점 : 685.0, 590.0 명중
+목표 지점 : 478.0, 680.0 명중
+코끼리5을(를) 소환했습니다.
+코끼리5이(가) 사망했습니다.
+코끼리6을(를) 소환했습니다.
+코끼리6이(가) 사망했습니다.
+코끼리7을(를) 소환했습니다.
+코끼리8을(를) 소환했습니다.
+코끼리9을(를) 소환했습니다.
+코끼리10을(를) 소환했습니다.
+코끼리11을(를) 소환했습니다.
+코끼리12을(를) 소환했습니다.
+코끼리13을(를) 소환했습니다.
+코끼리14을(를) 소환했습니다.
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+NUCLEAR LAUNCH DETECTED
+목표 지점 : 850.0, 460.0 명중
+목표 지점 : 608.0, 480.0 명중
+코끼리7이(가) 사망했습니다.
+코끼리8이(가) 사망했습니다.
+코끼리13이(가) 사망했습니다.
+목표 지점 : 340.0, 520.0 명중
+코끼리14이(가) 사망했습니다.
+코끼리9이(가) 사망했습니다.
+코끼리12이(가) 사망했습니다.
+코끼리10이(가) 사망했습니다.
+목표 지점 : 217.0, 580.0 명중
+코끼리11이(가) 사망했습니다.
+하이에나25을(를) 소환했습니다.
