@@ -317,7 +317,6 @@ class LION_HUNT_PACK(Behaves):
 
 class ZEBRA_ALERT(Behaves):
 
-
     def __init__(self, actor: Animal):
         self.actor = actor
 
