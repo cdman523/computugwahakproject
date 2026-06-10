@@ -131,7 +131,7 @@ class Animal(Entity):
 
 
     def move(self, speed, goto: pygame.Vector2):
-        if goto.x<50 or goto.x>1150 or goto.y<50 or goto.y>700:
+        if goto.x<40 or goto.x>1160 or goto.y<40 or goto.y>710:
             return self.move(speed,pygame.Vector2(max(min(1150,goto.x),50),max(min(700,goto.y),50)))
         self.pos = goto
         if speed > self.speed:
@@ -198,7 +198,7 @@ class Grass:
 
 def addlog(txt):
     with open('log.txt','a',encoding='UTF-8') as f:
-        f.write(txt+'\n')
+        f.write(f'[{pygame.time.get_ticks()/1000:.2f}] {txt}\n')
 
 def normalize(v:pygame.Vector2):
     if v.length_squared()<1e-8:

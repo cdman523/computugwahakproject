@@ -50,26 +50,25 @@ class Simulator:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 mousepos=pygame.Vector2(pygame.mouse.get_pos())
-                if mousepos.x>self.SCREEN_H-50 or mousepos.x<50 or mousepos.y>self.SCREEN_W-50 or mousepos.y<50:
-                    pass
-                elif event.key == pygame.K_0:
+                cansummon=0<mousepos.x<self.SCREEN_H and 0<mousepos.y<self.SCREEN_W
+                if event.key == pygame.K_0 and cansummon:
                     self.world.summon(
                         ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA,
                         mousepos,
                     )
-                elif event.key==pygame.K_1:
+                elif event.key==pygame.K_1 and cansummon:
                     self.world.summon(Elephant,mousepos)
-                elif event.key==pygame.K_2:
+                elif event.key==pygame.K_2 and cansummon:
                     self.world.summon(Lion,mousepos)
-                elif event.key==pygame.K_3:
+                elif event.key==pygame.K_3 and cansummon:
                     self.world.summon(Hyena,mousepos)
-                elif event.key==pygame.K_4:
+                elif event.key==pygame.K_4 and cansummon:
                     self.world.summon(Buffalo,mousepos)
-                elif event.key==pygame.K_5:
+                elif event.key==pygame.K_5 and cansummon:
                     self.world.summon(Zebra,mousepos)
-                elif event.key==pygame.K_6:
+                elif event.key==pygame.K_6 and cansummon:
                     self.world.summon(Gazelle,mousepos)
-                elif event.key==pygame.K_7:
+                elif event.key==pygame.K_7 and cansummon:
                     self.world.summon(Carcass,mousepos)
                 elif event.key==pygame.K_SPACE:
                     self.pause=not self.pause
@@ -85,7 +84,7 @@ class Simulator:
                     self.xspeed-=1
                     if self.xspeed<=0:
                         self.xspeed=0.1
-                elif event.key==pygame.K_z:
+                elif event.key==pygame.K_z and cansummon:
                     self.world.summon(Nuclear,mousepos)
                 elif event.key==pygame.K_x:
                     pass
