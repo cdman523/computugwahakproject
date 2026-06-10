@@ -42,7 +42,7 @@ class Buffalo(Animal):
         return (f"물소{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self),EAT_GRASS(self), WANDER(self)]
+        return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self),EAT_GRASS(self,0.4), WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(
@@ -67,7 +67,7 @@ class Gazelle(Animal):
         return (f"가젤{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [GAZELLE_MOVE_TO_GAZELLE(self),EAT_GRASS(self), WANDER(self)]
+        return [GAZELLE_MOVE_TO_GAZELLE(self),EAT_GRASS(self,0.2), WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(
@@ -152,7 +152,7 @@ class Zebra(Animal):
         return [
             ZEBRA_ALERT(self),
             RUNAWAY(self),
-            EAT_GRASS(self),
+            EAT_GRASS(self,0.2),
             WANDER(self)
         ]
 
@@ -179,7 +179,7 @@ class Elephant(Animal):
         return (f"코끼리{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [EAT_GRASS(self),WANDER(self)]
+        return [EAT_GRASS(self,1.0),WANDER(self)]
 
     def surface(self):
         return pygame.transform.scale(

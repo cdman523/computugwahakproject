@@ -59,7 +59,7 @@ class BUFFALO_MOVE_TO_BUFFALO(Behaves):
             return False
 
         direction = target.pos - self.actor.pos
-        if direction.length() > 30:
+        if direction.length() > 40:
             direction = normalize(direction)
             speed = self.actor.speed
             goto = self.actor.pos + direction * speed
@@ -82,7 +82,7 @@ class GAZELLE_MOVE_TO_GAZELLE(Behaves):
             return False
         
         direction = target.pos - self.actor.pos
-        if direction.length() > 30:
+        if direction.length() > 40:
             direction=normalize(direction)
             speed = self.actor.speed
             goto = self.actor.pos + direction * speed
@@ -94,9 +94,9 @@ class CHARGE_RUSH(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor
         self.detect_radius = 60.0  
-        self.damage_radius = 20.0   
+        self.damage_radius = 30.0   
         self.rush_speed_mult = 2  
-        self.collision_damage = 1  
+        self.collision_damage = 2  
 
     def act(self, world: World):
         predator_names = ["Lion", "Hyena"] 
@@ -113,13 +113,14 @@ class CHARGE_RUSH(Behaves):
         escape_dir=normalize(escape_dir)
 
         rush_speed = self.actor.speed * self.rush_speed_mult
-        goto = self.actor.pos + (escape_dir * rush_speed/2)
+        goto = self.actor.pos + (escape_dir * rush_speed * 4)
         
         self.actor.move(rush_speed, goto)
 
         hit_targets = world.findtarget(self.actor, Animal, self.damage_radius)
         for target in hit_targets:
             target.hp -= self.collision_damage
+            target.attacker=self.actor
 
         return True
         
@@ -131,31 +132,32 @@ class ATTACK_TARGET(Behaves):
     def act(self, world: World):
         if self.predator.hunger > self.predator.MAXHUNGER * 0.8:
             return False
-            
         target = world.findnearesttarget(self.predator, self.target_types, findrange=self.predator.sight)
         if target and isinstance(target, Animal):
             from animals import Elephant
             if world.findnearesttarget(self.predator, Elephant, findrange=80):
                 return False
 
-            if self.predator.pos.distance_to(target.pos) > 20:
-                self.predator.move(self.predator.speed * 1.3, self.predator.pos+normalize(target.pos-self.predator.pos)*self.predator.speed*1.3)
+            if self.predator.pos.distance_to(target.pos) > 50:
+                self.predator.move(self.predator.speed * 1.3, self.predator.pos+normalize(target.pos+normalize(Vector2(0,0))*30-self.predator.pos)*self.predator.speed*1.3)
             else:
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
+                target.attacker=self.predator
                 #addlog(f'{self.predator.name}이(가) {target.name}에게 {damage}의 피해를 입혔습니다')
             return True
         return False
 
 class EAT_GRASS(Behaves):
-    def __init__(self,eater):
+    def __init__(self,eater,eat):
         self.eater=eater
+        self.eat=eat
     def act(self,world:World):
         grassx,grassy=world.wheregrass(self.eater)
-        if world.grass_map[grassy][grassx].remain<=0.5 or self.eater.hunger>self.eater.MAXHUNGER*0.9:
+        if world.grass_map[grassy][grassx].remain<=self.eat+0.1 or self.eater.hunger>self.eater.MAXHUNGER*0.9:
             return False
         self.eater.hunger+=0.2
-        world.grass_map[grassy][grassx].remain-=0.2
+        world.grass_map[grassy][grassx].remain-=self.eat
         return True
 
 class EAT_CARCASS(Behaves):
@@ -173,7 +175,7 @@ class EAT_CARCASS(Behaves):
             if isinstance(self.actor, Lion) and target.remain < 70:
                 return False
         #시체 근처로 이동 후 섭취
-            if self.actor.pos.distance_to(target.pos) > 20:
+            if self.actor.pos.distance_to(target.pos) > 30:
                 self.actor.move(self.actor.speed,self.actor.pos+normalize(target.pos-self.actor.pos)*self.actor.speed)
             else:
                 target.remain-=0.2
@@ -253,9 +255,10 @@ class LION_HUNT_PACK(Behaves):
 
             # 충분히 모였으면 공격
             if len(nearby_lions) + 1 >= self.MIN_LIONS:
-                if self.actor.pos.distance_to(target.pos) <= 15:
+                if self.actor.pos.distance_to(target.pos) <= 30:
                     damage = max(1, self.actor.attack - target.defense)
                     target.hp -= damage
+                    target.attacker=self.actor
                     return True
         return False
 class ZEBRA_ALERT(Behaves):
@@ -397,15 +400,16 @@ class ATTACK_LION_WHEN_MANY(Behaves):
     def act(self,world: World):
         from animals import Hyena, Lion
         lion_target = world.findnearesttarget(self.actor,Lion,findrange=self.actor.sight)
-        if not lion_target:
+        if not lion_target or lion_target.isdead:
             return False
         nearby_hyena = world.findtarget(self.actor,Hyena,findrange=self.actor.sight)
-        if len(nearby_hyena)+1>=10:
-            if self.actor.pos.distance_to(lion_target.pos)>15:
+        if len(nearby_hyena)+1>=6:
+            if self.actor.pos.distance_to(lion_target.pos)>30:
                 self.actor.move(self.actor.speed*1.3, self.actor.pos+normalize(lion_target.pos-self.actor.pos)*self.actor.speed)
             else:
                 damage = max(1, self.actor.attack - lion_target.defense)
                 lion_target.hp -= damage
+                lion_target.attacker=self.actor
             return True
             
         return False

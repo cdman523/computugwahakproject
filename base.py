@@ -53,7 +53,7 @@ class World:
                         break
         for gra in self.grass_map:
             for ss in gra:
-                ss.grow(r.uniform(0.01,0.05)*(r.randint(1,int(ss.remain)+5)==1))
+                ss.grow(r.uniform(0.01,0.02*((20-ss.remain)//4))*(r.randint(1,2*int(ss.remain//2+1))==1))
 
     def remove(self, entity: "Entity"):
         del self.entity_map[entity]
@@ -65,6 +65,7 @@ class World:
             if (targetlist is None or isinstance(an, targetlist))
             and (an.pos.distance_to(entity.pos)) <= findrange
             and an!=entity
+            and an.isdead==False
         ]
 
     def findnearesttarget(self, entity:Entity, targetlist=None, findrange=float("inf"))->Entity|None:
@@ -108,6 +109,7 @@ class Animal(Entity):
         self.pos = pos
         self.world = world
         self.dir=pygame.Vector2(1,0).rotate(r.uniform(0,360))
+        self.attacker=None
 
     @property
     def hp(self):
@@ -144,8 +146,9 @@ class Animal(Entity):
             return
         self.isdead=True
         self.world.summon(Carcass, self.pos)
+        addlog(f'{self.name}이(가) 사망했습니다.' if self.attacker is None else f'{self.name}이(가) {self.attacker.name}에 의해 사망했습니다.')
         self.world.remove(self)
-        addlog(f'{self.name}이(가) 사망했습니다.')
+        
 
 
 class Carcass(Entity):
@@ -245,6 +248,7 @@ class Explosion(Entity):
         self.radius=50
         self.mradius=800
         self.alpha=255
+        self.name='NUCLEAR'
         addlog(f'목표 지점 : {pos.x}, {pos.y} 명중')
     @classmethod
     def info(cls):
@@ -302,6 +306,7 @@ class NuclearBomber(Behaves):
         for entity in world.entities:
             if not isinstance(entity,Animal) or entity.isdead: continue
             if self.explosion.radius>=entity.pos.distance_to(self.explosion.pos-pygame.Vector2(0,self.explosion.radius*0.15))>=self.explosion.radius-60:
+                entity.attacker=self.explosion
                 entity.hp=0
         if self.explosion.radius >= self.explosion.mradius or self.explosion.alpha <= 0:
             self.explosion.isdead = True
