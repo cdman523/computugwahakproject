@@ -8,8 +8,9 @@ import random as r
 class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_GO_HAL_SOO_IT_DA(
     Animal
 ):
-    ENUM=0
-    IMAGE=pygame.image.load("images/testimage0.png")
+    ENUM = 0
+    IMAGE = pygame.image.load("images/testimage0.png")
+
     def habit(self):
         return [EXAMPLE_JUMPING(self, 10), EXAMPLE_WALK(self), EXAMPLE_HELLO(self)]
 
@@ -18,16 +19,18 @@ class ALEPHANT_THE_LEGEND_ANIMAL_IS_BY_SUWOO_MOONSUWOO_GU_NEN_GA_HI_SIN_HWA_LA_G
 
     @classmethod
     def info(cls):
-        cls.ENUM+=1
-        return (f"대서우{cls.ENUM}", 10,10,10,20,10,10)
+        cls.ENUM += 1
+        return (f"대서우{cls.ENUM}", 10, 10, 10, 20, 10, 10)
 
 
 def clamp(value, min_val, max_val):
     return max(min_val, min(value, max_val))
 
+
 class Buffalo(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load("images/bufalo.png")
+    IMAGE = pygame.image.load("images/bufalo.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -38,21 +41,25 @@ class Buffalo(Animal):
         hunger = 20
         speed = round(clamp(r.gauss(3.0, 0.2), 2.0, 4.0), 2)
         sight = int(round(clamp(r.gauss(130, 10), 100, 160)))
-        
+
         return (f"버팔로{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self),EAT_GRASS(self,0.4), WANDER(self)]
+        return [
+            CHARGE_RUSH(self),
+            BUFFALO_MOVE_TO_BUFFALO(self),
+            EAT_GRASS(self, 0.4),
+            WANDER(self),
+        ]
 
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (75,75)
-        )
+        return pygame.transform.scale(self.IMAGE, (75, 75))
 
 
 class Gazelle(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load("images/gazel.png")
+    IMAGE = pygame.image.load("images/gazel.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -63,21 +70,20 @@ class Gazelle(Animal):
         hunger = 20
         speed = round(clamp(r.gauss(6.0, 0.4), 4.5, 7.5), 2)
         sight = int(round(clamp(r.gauss(110, 8), 90, 130)))
-        
+
         return (f"가젤{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [GAZELLE_MOVE_TO_GAZELLE(self),EAT_GRASS(self,0.2), WANDER(self)]
+        return [GAZELLE_MOVE_TO_GAZELLE(self), EAT_GRASS(self, 0.2), WANDER(self)]
 
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (60,60)
-        )
+        return pygame.transform.scale(self.IMAGE, (60, 60))
 
 
 class Hyena(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load("images/hyena.png")
+    IMAGE = pygame.image.load("images/hyena.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -88,21 +94,25 @@ class Hyena(Animal):
         hunger = 60
         speed = round(clamp(r.gauss(4.0, 0.2), 3.0, 5.0), 2)
         sight = int(round(clamp(r.gauss(140, 10), 110, 170)))
-        
+
         return (f"하이에나{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [ATTACK_TARGET(self, [Gazelle, Zebra]), EAT_CARCASS(self), ATTACK_LION_WHEN_MANY(self), WANDER(self)]
-    
+        return [
+            ATTACK_TARGET(self, [Gazelle, Zebra]),
+            EAT_CARCASS(self),
+            ATTACK_LION_WHEN_MANY(self),
+            WANDER(self),
+        ]
+
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (60,60)
-        )
+        return pygame.transform.scale(self.IMAGE, (60, 60))
 
 
 class Lion(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load("images/lion0.png")
+    IMAGE = pygame.image.load("images/lion0.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -113,7 +123,7 @@ class Lion(Animal):
         hunger = 50
         speed = round(clamp(r.gauss(5.0, 0.2), 3.0, 6.0), 2)
         sight = int(round(clamp(r.gauss(150, 10), 120, 180)))
-        
+
         return (f"사자{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
@@ -123,18 +133,17 @@ class Lion(Animal):
             LION_GUARD_CARCASS(self),
             LION_HUNT_PACK(self),
             ATTACK_TARGET(self, [Zebra, Gazelle]),
-            WANDER(self)
+            WANDER(self),
         ]
 
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (75,75)
-        )
+        return pygame.transform.scale(self.IMAGE, (75, 75))
 
 
 class Zebra(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load("images/zebra.png")
+    IMAGE = pygame.image.load("images/zebra.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -145,26 +154,20 @@ class Zebra(Animal):
         hunger = 25
         speed = round(clamp(r.gauss(4.5, 0.3), 4.0, 6.0), 2)
         sight = int(round(clamp(r.gauss(200, 15), 160, 240)))
-        
+
         return (f"얼룩말{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [
-            ZEBRA_ALERT(self),
-            RUNAWAY(self),
-            EAT_GRASS(self,0.2),
-            WANDER(self)
-        ]
+        return [ZEBRA_ALERT(self), RUNAWAY(self), EAT_GRASS(self, 0.2), WANDER(self)]
 
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (60,60)
-        )
+        return pygame.transform.scale(self.IMAGE, (60, 60))
 
 
 class Elephant(Animal):
     ENUM = 0
-    IMAGE=pygame.image.load('images/alephant.png')
+    IMAGE = pygame.image.load("images/alephant.png")
+
     @classmethod
     def info(cls):
         cls.ENUM += 1
@@ -175,13 +178,11 @@ class Elephant(Animal):
         hunger = 20
         speed = round(clamp(r.gauss(2.0, 0.1), 1.5, 2.5), 2)
         sight = int(round(clamp(r.gauss(120, 8), 90, 150)))
-        
+
         return (f"코끼리{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
-        return [EAT_GRASS(self,1.0),WANDER(self)]
+        return [EAT_GRASS(self, 1.0), WANDER(self)]
 
     def surface(self):
-        return pygame.transform.scale(
-            self.IMAGE, (100,100)
-        )
+        return pygame.transform.scale(self.IMAGE, (100, 100))

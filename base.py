@@ -4,10 +4,11 @@ import random as r
 
 
 class Entity(ABC):
-    layer=0
+    layer = 0
+
     def __init__(self, pos: pygame.Vector2):
         self.pos = pos
-        self.isdead=False
+        self.isdead = False
 
     def __hash__(self):
         return id(self)
@@ -28,7 +29,7 @@ class World:
         self.grass_map = [
             [Grass(r.uniform(10, 20)) for _ in range(16)] for _ in range(10)
         ]
-        self.worldtime=0
+        self.worldtime = 0
 
     @property
     def entities(self) -> list[Entity]:
@@ -37,25 +38,28 @@ class World:
     def summon(self, entity, pos):
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = ett.pos
-        if isinstance(ett,Animal):
-            addlog(self,f'{ett.name}을(를) 소환했습니다.')
+        if isinstance(ett, Animal):
+            addlog(self, f"{ett.name}을(를) 소환했습니다.")
 
     def update(self):
-        self.worldtime+=1
+        self.worldtime += 1
         for entity in self.entities:
             if not entity.isdead:
                 for a in entity.habit():
                     if a.act(self):
-                        if isinstance(entity,Animal):
-                            entity.hunger-=0.05
-                            if entity.hunger<=0:
-                                entity.hp-=0.05
-                            elif entity.hunger>=entity.MAXHUNGER*0.8:
-                                entity.hp+=0.02
+                        if isinstance(entity, Animal):
+                            entity.hunger -= 0.05
+                            if entity.hunger <= 0:
+                                entity.hp -= 0.05
+                            elif entity.hunger >= entity.MAXHUNGER * 0.8:
+                                entity.hp += 0.02
                         break
         for gra in self.grass_map:
             for ss in gra:
-                ss.grow(r.uniform(0.01,0.02*((20-ss.remain)//4))*(r.randint(1,2*int(ss.remain//2+1))==1))
+                ss.grow(
+                    r.uniform(0.01, 0.02 * ((20 - ss.remain) // 4))
+                    * (r.randint(1, 2 * int(ss.remain // 2 + 1)) == 1)
+                )
 
     def remove(self, entity: "Entity"):
         del self.entity_map[entity]
@@ -66,18 +70,20 @@ class World:
             for an in self.entities
             if (targetlist is None or isinstance(an, targetlist))
             and (an.pos.distance_to(entity.pos)) <= findrange
-            and an!=entity
-            and an.isdead==False
+            and an != entity
+            and an.isdead == False
         ]
 
-    def findnearesttarget(self, entity:Entity, targetlist=None, findrange=float("inf"))->Entity|None:
+    def findnearesttarget(
+        self, entity: Entity, targetlist=None, findrange=float("inf")
+    ) -> Entity | None:
         targets = self.findtarget(entity, targetlist, findrange)
         if len(targets) == 0:
             return None
         return min(targets, key=lambda aa: aa.pos.distance_to(entity.pos))
-    
-    def wheregrass(self,entity):
-        return (int(entity.pos.x//75),int(entity.pos.y//75))
+
+    def wheregrass(self, entity):
+        return (int(entity.pos.x // 75), int(entity.pos.y // 75))
 
 
 class Behaves(ABC):
@@ -86,8 +92,9 @@ class Behaves(ABC):
 
 
 class Animal(Entity):
-    MAXHUNGER=50
-    layer=1
+    MAXHUNGER = 50
+    layer = 1
+
     def __init__(
         self,
         name,
@@ -100,93 +107,106 @@ class Animal(Entity):
         pos: pygame.Vector2,
         world,
     ):
-        self.isdead=False
+        self.isdead = False
         self.name = name
-        self.maxhp=self.hp = hp
+        self.maxhp = self.hp = hp
         self.attack = attack
         self.defense = defense
-        self.MAXHUNGER=self.hunger = hunger
+        self.MAXHUNGER = self.hunger = hunger
         self.speed = speed
         self.sight = sight
         self.pos = pos
         self.world = world
-        self.dir=pygame.Vector2(1,0).rotate(r.uniform(0,360))
-        self.attacker=None
-        self._state=['donot']
-        self.lastlog=None
-        self.logtime=0
+        self.dir = pygame.Vector2(1, 0).rotate(r.uniform(0, 360))
+        self.attacker = None
+        self._state = ["donot"]
+        self.lastlog = None
+        self.logtime = 0
 
     @property
     def hp(self):
         return self._hp
+
     @hp.setter
-    def hp(self,v):
+    def hp(self, v):
         if self.isdead:
             return
-        self._hp=v if v<=self.maxhp else self.maxhp
-        if self.hp<=0:
+        self._hp = v if v <= self.maxhp else self.maxhp
+        if self.hp <= 0:
             self.dead()
 
     @property
     def hunger(self):
         return self._hunger
-    
+
     @hunger.setter
-    def hunger(self,v):
-        self._hunger=v if 0<=v<=self.MAXHUNGER else 0 if v<0 else self.MAXHUNGER
+    def hunger(self, v):
+        self._hunger = v if 0 <= v <= self.MAXHUNGER else 0 if v < 0 else self.MAXHUNGER
 
     @property
     def state(self):
         return self._state
-    @state.setter
-    def state(self,v):
-        sttype=v[0]
-        if self._state==v: return
-        if sttype=='donot':
-            self._state=v
-            return
-        self._state=v
-        if sttype==self.lastlog: return
-        if self.world.worldtime-self.logtime<30:
-            return
-        self.logtime=self.world.worldtime
-        if sttype=='hunting':
-            addlog(self.world,f'{self.name}이(가) {v[1].name}을 공격하고 있습니다.')
-        elif sttype=='rush':
-            addlog(self.world,f'{self.name}이(가) 돌진합니다.')
-        elif sttype=='eatcarcass':
-            addlog(self.world,f'{self.name}이(가) 시체 섭취 중입니다.')
-        elif sttype=='eatgrass':
-            addlog(self.world,f'{self.name}이(가) 풀 섭취 중입니다.')
-        self.lastlog=sttype
 
+    @state.setter
+    def state(self, v):
+        sttype = v[0]
+        if self._state == v:
+            return
+        if sttype == "donot":
+            self._state = v
+            return
+        self._state = v
+        if sttype == self.lastlog:
+            return
+        if self.world.worldtime - self.logtime < 30:
+            return
+        self.logtime = self.world.worldtime
+        if sttype == "hunting":
+            addlog(self.world, f"{self.name}이(가) {v[1].name}을 공격하고 있습니다.")
+        elif sttype == "rush":
+            addlog(self.world, f"{self.name}이(가) 돌진합니다.")
+        elif sttype == "eatcarcass":
+            addlog(self.world, f"{self.name}이(가) 시체 섭취 중입니다.")
+        elif sttype == "eatgrass":
+            addlog(self.world, f"{self.name}이(가) 풀 섭취 중입니다.")
+        self.lastlog = sttype
 
     def move(self, speed, goto: pygame.Vector2):
-        if goto.x<40 or goto.x>1160 or goto.y<40 or goto.y>710:
-            return self.move(speed,pygame.Vector2(max(min(1150,goto.x),50),max(min(700,goto.y),50)))
+        if goto.x < 40 or goto.x > 1160 or goto.y < 40 or goto.y > 710:
+            return self.move(
+                speed,
+                pygame.Vector2(max(min(1150, goto.x), 50), max(min(700, goto.y), 50)),
+            )
         self.pos = goto
         if speed > self.speed:
-            self.hunger -= (speed-self.speed)/self.speed
-        self.world.entity_map[self]=goto
+            self.hunger -= (speed - self.speed) / self.speed
+        self.world.entity_map[self] = goto
         return f"{self.name}이 {goto.x},{goto.y}로 이동"
 
     def dead(self):
         if self.isdead:
             return
-        self.isdead=True
+        self.isdead = True
         self.world.summon(Carcass, self.pos)
-        addlog(self.world,f'{self.name}이(가) 사망했습니다.' if self.attacker is None else f'{self.name}이(가) {self.attacker.name}에 의해 사망했습니다.')
+        addlog(
+            self.world,
+            (
+                f"{self.name}이(가) 사망했습니다."
+                if self.attacker is None
+                else f"{self.name}이(가) {self.attacker.name}에 의해 사망했습니다."
+            ),
+        )
         self.world.remove(self)
-        
 
 
 class Carcass(Entity):
-    layer=0
-    IMAGE=pygame.image.load("images/carcas.png")
+    layer = 0
+    IMAGE = pygame.image.load("images/carcas.png")
+
     def __init__(self, remain: float, pos: "pygame.Vector2", world):
         self.remain = remain
         self.pos = pos
-        self.isdead=False
+        self.isdead = False
 
     @classmethod
     def info(cls):
@@ -196,9 +216,7 @@ class Carcass(Entity):
         return [Rot(self)]
 
     def surface(self):
-        sf = pygame.transform.scale(
-            self.IMAGE, (90, 90)
-        )
+        sf = pygame.transform.scale(self.IMAGE, (90, 90))
         sf.set_alpha(int(self.remain * 255 / 100))
         return sf
 
@@ -211,7 +229,7 @@ class Rot(Behaves):
 
     def act(self, world: World) -> bool:
         if self.carcass.remain <= 0:
-            self.carcass.isdead=True
+            self.carcass.isdead = True
             world.remove(self.carcass)
         else:
             self.carcass.remain -= self.ROT_VELOCITY
@@ -225,65 +243,80 @@ class Grass:
 
     def grow(self, val):
         self.remain += val
-        if self.remain>20:
-            self.remain=20
+        if self.remain > 20:
+            self.remain = 20
 
-def addlog(world:World,txt):
-    with open('log.txt','a',encoding='UTF-8') as f:
-        f.write(f'[{world.worldtime//3600:02}:{world.worldtime%3600//60:02}] {txt}\n')
 
-def normalize(v:pygame.Vector2):
-    if v.length_squared()<1e-8:
-        return pygame.Vector2(1,0).rotate(r.uniform(0,360))
+def addlog(world: World, txt):
+    with open("log.txt", "a", encoding="UTF-8") as f:
+        f.write(f"[{world.worldtime//3600:02}:{world.worldtime%3600//60:02}] {txt}\n")
+
+
+def normalize(v: pygame.Vector2):
+    if v.length_squared() < 1e-8:
+        return pygame.Vector2(1, 0).rotate(r.uniform(0, 360))
     return v.normalize()
 
+
 class Nuclear(Entity):
-    layer=100
-    IMAGE=pygame.image.load('images/suwoobomb.png')
-    def __init__(self,pos,world):
-        self.isdead=False
-        super().__init__(pygame.Vector2(pos.x,-100))
-        self.targetpos=pos
-        self.world=world
-        addlog(self.world,'NUCLEAR LAUNCH DETECTED')
-    def fall(self,v):
-        self.pos.y+=v
-        self.world.entity_map[self].y+=v
+    layer = 100
+    IMAGE = pygame.image.load("images/suwoobomb.png")
+
+    def __init__(self, pos, world):
+        self.isdead = False
+        super().__init__(pygame.Vector2(pos.x, -100))
+        self.targetpos = pos
+        self.world = world
+        addlog(self.world, "NUCLEAR LAUNCH DETECTED")
+
+    def fall(self, v):
+        self.pos.y += v
+        self.world.entity_map[self].y += v
+
     @classmethod
     def info(cls):
         return ()
+
     def habit(self):
         return [BombFall(self)]
+
     def surface(self):
-        return pygame.transform.scale(self.IMAGE,(200,200))
-    
+        return pygame.transform.scale(self.IMAGE, (200, 200))
+
+
 class BombFall(Behaves):
-    def __init__(self,bomb):
-        self.bomb=bomb
-    def act(self,world):
+    def __init__(self, bomb):
+        self.bomb = bomb
+
+    def act(self, world):
         self.bomb.fall(5)
-        if self.bomb.pos.y>=self.bomb.targetpos.y:
-            world.summon(Explosion,self.bomb.pos)
-            self.bomb.isdead=True
+        if self.bomb.pos.y >= self.bomb.targetpos.y:
+            world.summon(Explosion, self.bomb.pos)
+            self.bomb.isdead = True
             world.remove(self.bomb)
         return True
 
+
 class Explosion(Entity):
-    layer=50
-    IMAGE=pygame.image.load("images/suwooattack1.png")
-    def __init__(self,pos,world):
+    layer = 50
+    IMAGE = pygame.image.load("images/suwooattack1.png")
+
+    def __init__(self, pos, world):
         super().__init__(pos)
-        self.world=world
-        self.radius=50
-        self.mradius=800
-        self.alpha=255
-        self.name='NUCLEAR'
-        addlog(self.world,f'목표 지점 : {pos.x}, {pos.y} 명중')
+        self.world = world
+        self.radius = 50
+        self.mradius = 800
+        self.alpha = 255
+        self.name = "NUCLEAR"
+        addlog(self.world, f"목표 지점 : {pos.x}, {pos.y} 명중")
+
     @classmethod
     def info(cls):
         return ()
+
     def habit(self):
         return [NuclearBomber(self)]
+
     def surface(self):
         size = int(self.radius * 2 + 20)
 
@@ -291,14 +324,14 @@ class Explosion(Entity):
 
         center = size // 2
 
-        #파장 그리기 AI로 검수함
+        # 파장 그리기 AI로 검수함
         # 충격파(원 둘레)
         pygame.draw.circle(
             sf,
             (255, 255, 255, max(20, self.alpha // 3)),
             (center, center),
             int(self.radius),
-            4
+            4,
         )
 
         # 보조 파장
@@ -310,16 +343,13 @@ class Explosion(Entity):
                     (255, 255, 255, max(10, self.alpha // 5)),
                     (center, center),
                     int(r),
-                    2
+                    2,
                 )
-        #파장 그리기 AI검수
+        # 파장 그리기 AI검수
 
         # 폭발 이미지
         img_size = max(10, int(self.radius))
-        img = pygame.transform.scale(
-            self.IMAGE,
-            (img_size, img_size)
-        )
+        img = pygame.transform.scale(self.IMAGE, (img_size, img_size))
 
         img.set_alpha(self.alpha)
 
@@ -328,17 +358,26 @@ class Explosion(Entity):
 
         return sf
 
+
 class NuclearBomber(Behaves):
-    def __init__(self,explosion):
-        self.explosion=explosion
-    def act(self,world):
-        self.explosion.radius+=7
-        self.explosion.alpha-=3
+    def __init__(self, explosion):
+        self.explosion = explosion
+
+    def act(self, world):
+        self.explosion.radius += 7
+        self.explosion.alpha -= 3
         for entity in world.entities:
-            if not isinstance(entity,Animal) or entity.isdead: continue
-            if self.explosion.radius>=entity.pos.distance_to(self.explosion.pos-pygame.Vector2(0,self.explosion.radius*0.15))>=self.explosion.radius-60:
-                entity.attacker=self.explosion
-                entity.hp=0
+            if not isinstance(entity, Animal) or entity.isdead:
+                continue
+            if (
+                self.explosion.radius
+                >= entity.pos.distance_to(
+                    self.explosion.pos - pygame.Vector2(0, self.explosion.radius * 0.15)
+                )
+                >= self.explosion.radius - 60
+            ):
+                entity.attacker = self.explosion
+                entity.hp = 0
         if self.explosion.radius >= self.explosion.mradius or self.explosion.alpha <= 0:
             self.explosion.isdead = True
             world.remove(self.explosion)
