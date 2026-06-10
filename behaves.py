@@ -143,6 +143,7 @@ class ATTACK_TARGET(Behaves):
             else:
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
+                #addlog(f'{self.predator.name}이(가) {target.name}에게 {damage}의 피해를 입혔습니다')
             return True
         return False
 

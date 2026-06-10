@@ -21,6 +21,9 @@ class Simulator:
         self.timecount=0
         self.pause=False
         self.grassmap=False
+        self.grass_surface=None
+        self.font=pygame.font.SysFont('malgungothic',16)
+        self.logpoint=0
         self.game_surface = pygame.Surface((1200, 750), pygame.SRCALPHA)
         with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
@@ -87,7 +90,8 @@ class Simulator:
                 elif event.key==pygame.K_z and cansummon:
                     self.world.summon(Nuclear,mousepos)
                 elif event.key==pygame.K_x:
-                    pass
+                    with open('log.txt','r',encoding='utf-8') as f:
+                        self.logpoint=len(f.readlines())
                 elif event.key==pygame.K_SLASH:
                     print(self.world.entities)
                 elif event.key==pygame.K_c:
@@ -166,10 +170,7 @@ class Simulator:
         1
         )
 
-        self.screen.blit(self.game_surface,(0,0))
-
-    @staticmethod
-    def draw_text(screen,text,x,y,size,color=(255,255,255)):
+    def draw_text(self,screen,text,x,y,size,color=(255,255,255)):
         font = pygame.font.SysFont('malgungothic', size)
         text_surface = font.render(text, True, color)
         screen.blit(text_surface, (x, y))
@@ -177,32 +178,14 @@ class Simulator:
     def draw_UI(self):
         self.draw_text(self.screen,f'{self.xspeed:.2f}배속'+('(일시정지됨)' if self.pause else ''),0,0,30)
         if self.grassmap:
-            CELL_SIZE = 75
-
-            for y in range(10):
-                for x in range(16):
-
-                    rect = pygame.Rect(
-                        x * CELL_SIZE,
-                        y * CELL_SIZE,
-                        CELL_SIZE,
-                        CELL_SIZE
-                    )
-
-                    pygame.draw.rect(
-                        self.screen,
-                        (100, 100, 100),
-                        rect,
-                        1
-                    )
-                                   
-                    self.draw_text(
-                        self.screen,
-                        f'{self.world.grass_map[y][x].remain:.2f}',
-                        rect.x + CELL_SIZE/2-10,
-                        rect.y + CELL_SIZE/2-10,
-                        10
-                    )
+            self.update_grassmap()
+            self.screen.blit(
+                self.grass_surface,
+                (0,0)
+            )
+        self.draw_text(self.screen,'[esc] 종료 [space] 일시정지 [z] NUCLEAR [x] 로그 지우기 [c] 풀 보이기',0,750,20)
+        self.draw_text(self.screen,'[1] Elephant [2] Lion [3] Hyena [4] Buffalo [5] Zebra [6] Gazelle [7] Carcass',0,780,20)
+        self.draw_text(self.screen,'[↑] +0.1배속 [↓] -0.1배속 [→] +1배속 [←] -1배속',0,810,20)
     def draw_log(self):
 
         # 로그창 영역
@@ -247,7 +230,7 @@ class Simulator:
         # 줄바꿈 처리
         lines = []
 
-        for paragraph in text.split("\n"):
+        for paragraph in text.split("\n")[self.logpoint:]:
 
             if paragraph == "":
                 lines.append("")
@@ -297,3 +280,63 @@ class Simulator:
                     log_y + i * line_height
                 )
             )
+    def update_grassmap(self):
+        self.grass_surface = pygame.Surface(
+        (1200, 750),
+        pygame.SRCALPHA
+    )
+
+        for y in range(10):
+            for x in range(16):
+
+                grass = self.world.grass_map[y][x]
+
+                value = round(grass.remain,2)
+
+                ratio = max(
+                    0,
+                    min(value / 20, 1)
+                )
+
+                # 빨강 -> 노랑 -> 초록
+                color = (
+                    int(255 * (1 - ratio)),
+                    int(255 * ratio),
+                    0,
+                    100
+                )
+
+                rect = pygame.Rect(
+                    x * 75,
+                    y * 75,
+                    75,
+                    75
+                )   
+
+                pygame.draw.rect(
+                    self.grass_surface,
+                    color,
+                    rect
+                )
+
+                pygame.draw.rect(
+                    self.grass_surface,
+                    (50,50,50),
+                    rect,
+                    1
+                )
+
+                text = self.font.render(
+                    f'{value:.2f}',
+                    True,
+                    (255,255,255)
+                )
+
+                text_rect = text.get_rect(
+                    center=rect.center
+                )
+
+                self.grass_surface.blit(
+                    text,
+                    text_rect
+                )
