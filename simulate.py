@@ -95,8 +95,6 @@ class Simulator:
                 elif event.key==pygame.K_x:
                     with open('log.txt','r',encoding='utf-8') as f:
                         self.logpoint=len(f.readlines())
-                elif event.key==pygame.K_SLASH:
-                    print(self.world.entities)
                 elif event.key==pygame.K_c:
                     self.grassmap=not self.grassmap
                 elif event.key==pygame.K_ESCAPE:

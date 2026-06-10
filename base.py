@@ -112,6 +112,9 @@ class Animal(Entity):
         self.world = world
         self.dir=pygame.Vector2(1,0).rotate(r.uniform(0,360))
         self.attacker=None
+        self._state=['donot']
+        self.lastlog=None
+        self.logtime=0
 
     @property
     def hp(self):
@@ -132,6 +135,30 @@ class Animal(Entity):
     def hunger(self,v):
         self._hunger=v if 0<=v<=self.MAXHUNGER else 0 if v<0 else self.MAXHUNGER
 
+    @property
+    def state(self):
+        return self._state
+    @state.setter
+    def state(self,v):
+        sttype=v[0]
+        if self._state==v: return
+        if sttype=='donot':
+            self._state=v
+            return
+        self._state=v
+        if sttype==self.lastlog: return
+        if self.world.worldtime-self.logtime<30:
+            return
+        self.logtime=self.world.worldtime
+        if sttype=='hunting':
+            addlog(self.world,f'{self.name}이(가) {v[1].name}을 공격하고 있습니다.')
+        elif sttype=='rush':
+            addlog(self.world,f'{self.name}이(가) 돌진합니다.')
+        elif sttype=='eatcarcass':
+            addlog(self.world,f'{self.name}이(가) 시체 섭취 중입니다.')
+        elif sttype=='eatgrass':
+            addlog(self.world,f'{self.name}이(가) 풀 섭취 중입니다.')
+        self.lastlog=sttype
 
 
     def move(self, speed, goto: pygame.Vector2):

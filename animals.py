@@ -106,12 +106,12 @@ class Lion(Animal):
     @classmethod
     def info(cls):
         cls.ENUM += 1
-        # 기준 스탯: HP 200, ATK 40, DEF 50, Hunger 50, SPD 4, Sight 150
-        hp = int(round(clamp(r.gauss(200, 10), 170, 230)))
+        # 기준 스탯: HP 300, ATK 40, DEF 50, Hunger 50, SPD 4, Sight 150
+        hp = int(round(clamp(r.gauss(300, 10), 250, 400)))
         attack = int(round(clamp(r.gauss(40, 3), 30, 50)))
         defense = int(round(clamp(r.gauss(50, 4), 40, 60)))
         hunger = 50
-        speed = round(clamp(r.gauss(4.0, 0.2), 3.2, 4.8), 2)
+        speed = round(clamp(r.gauss(5.0, 0.2), 3.0, 6.0), 2)
         sight = int(round(clamp(r.gauss(150, 10), 120, 180)))
         
         return (f"사자{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
@@ -143,7 +143,7 @@ class Zebra(Animal):
         attack = int(round(clamp(r.gauss(20, 2), 15, 25)))
         defense = int(round(clamp(r.gauss(30, 3), 20, 40)))
         hunger = 25
-        speed = round(clamp(r.gauss(5.0, 0.3), 4.0, 6.0), 2)
+        speed = round(clamp(r.gauss(4.5, 0.3), 4.0, 6.0), 2)
         sight = int(round(clamp(r.gauss(200, 15), 160, 240)))
         
         return (f"얼룩말{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
