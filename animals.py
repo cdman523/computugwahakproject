@@ -39,7 +39,7 @@ class Buffalo(Animal):
         speed = round(clamp(r.gauss(3.0, 0.2), 2.0, 4.0), 2)
         sight = int(round(clamp(r.gauss(130, 10), 100, 160)))
         
-        return (f"물소{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
+        return (f"버팔로{cls.ENUM}", hp, attack, defense, hunger, speed, sight)
 
     def habit(self):
         return [CHARGE_RUSH(self), BUFFALO_MOVE_TO_BUFFALO(self),EAT_GRASS(self,0.4), WANDER(self)]

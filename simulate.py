@@ -108,6 +108,7 @@ class Simulator:
                     self.xspeed=max(self.xspeed-0.5,0.1)
     def draw_background(self):
         self.screen.fill((80,80,80))
+        pygame.draw.rect(self.screen,(200,200,255),(-2,-2,self.SCREEN_H+4,self.SCREEN_W+4))
         self.screen.blit(
             pygame.transform.scale(
                 pygame.image.load("images/gbg1.png"),
@@ -191,13 +192,13 @@ class Simulator:
                 self.grass_surface,
                 (0,0)
             )
-        self.draw_text(self.screen,'[esc] 종료 [space] 일시정지 [z] NUCLEAR [x] 로그 지우기 [c] 풀 보이기',0,750,20)
-        self.draw_text(self.screen,'[1] Elephant [2] Lion [3] Hyena [4] Buffalo [5] Zebra [6] Gazelle [7] Carcass',0,780,20)
-        self.draw_text(self.screen,'[↑] +0.1배속 [↓] -0.1배속 [→] +1배속 [←] -1배속 [마우스 휠] ±0.5배속씩 조정',0,810,20)
+        self.draw_text(self.screen,'[esc] 종료 [space] 일시정지 [z] NUCLEAR [x] 로그 지우기 [c] 풀 보이기',10,755,20)
+        self.draw_text(self.screen,'[1] Elephant [2] Lion [3] Hyena [4] Buffalo [5] Zebra [6] Gazelle [7] Carcass',10,785,20)
+        self.draw_text(self.screen,'[↑] +0.1배속 [↓] -0.1배속 [→] +1배속 [←] -1배속 [마우스 휠] ±0.5배속씩 조정',10,815,20)
         if self.hover is not None:
-            self.draw_text(self.screen,f'이름 {self.hover.name} 종 {self.hover.__class__.__name__}',750,750,20)
-            self.draw_text(self.screen,f'체력 {self.hover.hp:.0f}/{self.hover.maxhp:.0f} 배고픔 {self.hover.hunger:.0f}/{self.hover.MAXHUNGER:.0f}',750,780,20)
-            self.draw_text(self.screen,f'속도 {self.hover.speed:.1f} 공격력 {self.hover.attack} 방어력{self.hover.defense} 시야 {self.hover.sight}',750,810,20)
+            self.draw_text(self.screen,f'이름 {self.hover.name} 종 {self.hover.__class__.__name__.upper()}',750,755,20)
+            self.draw_text(self.screen,f'체력 {self.hover.hp:.0f}/{self.hover.maxhp:.0f} 배고픔 {self.hover.hunger:.0f}/{self.hover.MAXHUNGER:.0f}',750,785,20)
+            self.draw_text(self.screen,f'속도 {self.hover.speed:.1f} 공격력 {self.hover.attack} 방어력{self.hover.defense} 시야 {self.hover.sight}',750,815,20)
     def draw_log(self):
 
         # 로그창 영역
@@ -217,7 +218,7 @@ class Simulator:
 
         pygame.draw.rect(
             self.screen,
-            (100, 100, 100),
+            (200,200,255),
             (log_x, log_y, log_w, log_h),
             2
         )

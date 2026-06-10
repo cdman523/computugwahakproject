@@ -113,14 +113,14 @@ class CHARGE_RUSH(Behaves):
         escape_dir=normalize(escape_dir)
 
         rush_speed = self.actor.speed * self.rush_speed_mult
-        goto = self.actor.pos + (escape_dir * rush_speed * 4)
-        
-        self.actor.move(rush_speed, goto)
+        goto = self.actor.pos + (escape_dir * rush_speed )
+        for _ in range(6):
+            self.actor.move(rush_speed, goto)
 
-        hit_targets = world.findtarget(self.actor, Animal, self.damage_radius)
-        for target in hit_targets:
-            target.hp -= self.collision_damage
-            target.attacker=self.actor
+            hit_targets = world.findtarget(self.actor, Animal, self.damage_radius)
+            for target in hit_targets:
+                target.hp -= self.collision_damage
+                target.attacker=self.actor
 
         return True
         
@@ -178,7 +178,7 @@ class EAT_CARCASS(Behaves):
             if self.actor.pos.distance_to(target.pos) > 30:
                 self.actor.move(self.actor.speed,self.actor.pos+normalize(target.pos-self.actor.pos)*self.actor.speed)
             else:
-                target.remain-=0.2
+                target.remain-=0.5
                 self.actor.hunger+=0.5
                 self.actor.hp+=0.1
             return True
@@ -219,7 +219,9 @@ class LION_REST(Behaves):
     def act(self, world: World) -> bool:
         if self.actor.hunger < self.actor.MAXHUNGER * 0.8:
             return False
+        self.actor.move(self.actor.speed*0.1,self.actor.pos+normalize(Vector2(0,0)))
         return True  # 배부름 → 휴식, 사냥 차단
+    
 class LION_HUNT_PACK(Behaves):
     """
     Buffalo는 체력·방어력이 높아 무리 사냥이 필요하다.
@@ -314,12 +316,12 @@ class RUNAWAY(Behaves):
 
         if elephant is not None:
             if elephant.pos.distance_to(self.actor.pos)<40: return False
-            self.actor.move(self.actor.speed*1.2, self.actor.pos+normalize(elephant.pos-self.actor.pos)*self.actor.speed*1.2)
+            self.actor.move(self.actor.speed*1.3, self.actor.pos+normalize(elephant.pos-self.actor.pos)*self.actor.speed*1.3)
         else:
             # 포식자 반대 방향으로 한 스텝 — move()가 방향+거리 계산하므로
             # 현재 pos에서 충분히 먼 반대 지점을 목표로 넘긴다
-            away = self.actor.pos + normalize(self.actor.pos - predator.pos) * self.actor.speed * 1.3
-            self.actor.move(self.actor.speed*1.3, away)
+            away = self.actor.pos + normalize(self.actor.pos - predator.pos) * self.actor.speed * 1.2
+            self.actor.move(self.actor.speed*1.2, away)
 
         return True
 

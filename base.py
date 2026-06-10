@@ -177,7 +177,7 @@ class Carcass(Entity):
 
 
 class Rot(Behaves):
-    ROT_VELOCITY = 0.05
+    ROT_VELOCITY = 0.2
 
     def __init__(self, carcass: Carcass):
         self.carcass = carcass
