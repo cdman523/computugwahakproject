@@ -331,6 +331,7 @@ class RUNAWAY(Behaves):
 
 
     # 평상시 목적지 없이 배회 (단, 코끼리 주변에는 접근 불가)
+    #자연스러운 랜덤 워크 구현 AI 도움받음
 class WANDER(Behaves):
     def __init__(self, actor: Animal):
         self.actor = actor

@@ -291,6 +291,7 @@ class Explosion(Entity):
 
         center = size // 2
 
+        #파장 그리기 AI로 검수함
         # 충격파(원 둘레)
         pygame.draw.circle(
             sf,
@@ -311,6 +312,7 @@ class Explosion(Entity):
                     int(r),
                     2
                 )
+        #파장 그리기 AI검수
 
         # 폭발 이미지
         img_size = max(10, int(self.radius))

@@ -162,7 +162,7 @@ class Simulator:
         (x, y+8, width, height)
         )
 
-        # 체력
+        # 배고픔
         pygame.draw.rect(
         self.game_surface,
         (160, 110, 60),
@@ -226,6 +226,7 @@ class Simulator:
             12
         )
 
+        #로그 글씨쓰기 AI도움
         # 로그 읽기
         try:
             with open(
@@ -291,6 +292,7 @@ class Simulator:
                     log_y + i * line_height
                 )
             )
+        #로그 글씨쓰기 AI도움
     def update_grassmap(self):
         self.grass_surface = pygame.Surface(
         (1200, 750),
@@ -351,6 +353,7 @@ class Simulator:
                     text,
                     text_rect
                 )
+                
     def get_hovered_animal(self):
         mouse_pos = pygame.mouse.get_pos()
 
