@@ -227,12 +227,7 @@ class EAT_CARCASS(Behaves):
 
 
 class LION_GUARD_CARCASS(Behaves):
-    """
-    사냥한 시체 주변에 머물러 하이에나 접근을 막는다.
-    - 감지 범위 내 Carcass가 있으면 그 쪽으로 이동하며 자리를 지킨다.
-    - 시체가 없으면 False → 다음 행동으로 넘어감.
-    """
-
+    #AI 활용
     GUARD_RANGE = 30
 
     def __init__(self, actor: Animal):
@@ -258,10 +253,6 @@ class LION_GUARD_CARCASS(Behaves):
 
 
 class LION_REST(Behaves):
-    """
-    배가 부른 사자는 초식동물이 곁을 지나가도 사냥하지 않고 휴식한다.
-    hunger가 MAX_HUNGER의 80% 이상이면 True를 반환하여 뒤 행동을 막는다.
-    """
 
     def __init__(self, actor: Animal):
         self.actor = actor
@@ -273,16 +264,11 @@ class LION_REST(Behaves):
         self.actor.move(
             self.actor.speed * 0.1, self.actor.pos + normalize(Vector2(0, 0))
         )
-        return True  # 배부름 → 휴식, 사냥 차단
+        return True 
 
 
 class LION_HUNT_PACK(Behaves):
-    """
-    Buffalo는 체력·방어력이 높아 무리 사냥이 필요하다.
-    - 감지 범위 내 Buffalo를 발견하면 근처 사자들을 소집해 함께 이동한다.
-    - 자신 포함 MIN_LIONS 마리 이상 모이면 공격까지 수행한다.
-    - Buffalo가 없으면 False → ATTACK_TARGET으로 넘어감.
-    """
+    #Ai 활용
 
     MIN_LIONS = 6
 
@@ -330,12 +316,7 @@ class LION_HUNT_PACK(Behaves):
 
 
 class ZEBRA_ALERT(Behaves):
-    """
-    시력이 좋은 얼룩말이 포식자(Lion, Hyena)를 먼저 발견하면
-    감지 범위 내 Gazelle에게도 도주 신호를 전달한다.
-    - 포식자가 없으면 False.
-    - 있으면 자신과 근처 Gazelle 모두 RUNAWAY 실행.
-    """
+
 
     def __init__(self, actor: Animal):
         self.actor = actor
@@ -349,7 +330,7 @@ class ZEBRA_ALERT(Behaves):
         if predator is None:
             return False
 
-        # 근처 가젤에게 도주 신호 전파
+        #가젤 신호 전파
         nearby_gazelles = world.findtarget(
             self.actor, (Gazelle,), findrange=self.actor.sight
         )
@@ -361,13 +342,7 @@ class ZEBRA_ALERT(Behaves):
 
 
 class RUNAWAY(Behaves):
-    """
-    포식자로부터 도망치되, 코끼리 근처로 이동하여 생존율을 높인다.
-    - 감지 범위 내 포식자가 없으면 False.
-    - Elephant가 감지 범위 내에 있으면 코끼리 방향으로 이동.
-    - 없으면 포식자 반대 방향으로 한 스텝 이동.
-    """
-
+#AI 활용
     def __init__(self, actor: Animal):
         self.actor = actor
 
