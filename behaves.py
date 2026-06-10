@@ -138,8 +138,8 @@ class ATTACK_TARGET(Behaves):
             if world.findnearesttarget(self.predator, Elephant, findrange=80):
                 return False
 
-            if self.predator.pos.distance_to(target.pos) > 15:
-                self.predator.move(self.predator.speed * 1.3, self.predator.pos+normalize(target.pos-self.predator.pos)*2.5)
+            if self.predator.pos.distance_to(target.pos) > 20:
+                self.predator.move(self.predator.speed * 1.3, self.predator.pos+normalize(target.pos-self.predator.pos)*self.predator.speed*1.3)
             else:
                 damage = max(1, self.predator.attack - target.defense)
                 target.hp -= damage
@@ -172,8 +172,8 @@ class EAT_CARCASS(Behaves):
             if isinstance(self.actor, Lion) and target.remain < 70:
                 return False
         #시체 근처로 이동 후 섭취
-            if self.actor.pos.distance_to(target.pos) > 10:
-                self.actor.move(self.actor.speed,self.actor.pos+normalize(target.pos-self.actor.pos))
+            if self.actor.pos.distance_to(target.pos) > 20:
+                self.actor.move(self.actor.speed,self.actor.pos+normalize(target.pos-self.actor.pos)*self.actor.speed)
             else:
                 target.remain-=0.2
                 self.actor.hunger+=0.5
@@ -224,7 +224,7 @@ class LION_HUNT_PACK(Behaves):
     - 자신 포함 MIN_LIONS 마리 이상 모이면 공격까지 수행한다.
     - Buffalo가 없으면 False → ATTACK_TARGET으로 넘어감.
     """
-    MIN_LIONS = 2
+    MIN_LIONS = 4
 
     def __init__(self, actor: Animal):
         self.actor = actor
@@ -244,18 +244,19 @@ class LION_HUNT_PACK(Behaves):
             and e is not self.actor
             and self.actor.pos.distance_to(e.pos) <= self.actor.sight
         ]
-        for lion in nearby_lions:
-            lion.move(lion.speed, target.pos)
+        if len(nearby_lions)+1>=self.MIN_LIONS-1:
+            for lion in nearby_lions:
+                lion.move(lion.speed, lion.pos+normalize(target.pos-lion.pos)*lion.speed)
+            if target.pos.distance_to(self.actor.pos)>30:
+                self.actor.move(self.actor.speed, self.actor.pos+normalize(target.pos-self.actor.pos)*self.actor.speed)
 
-        self.actor.move(self.actor.speed, target.pos)
-
-        # 충분히 모였으면 공격
-        if len(nearby_lions) + 1 >= self.MIN_LIONS:
-            if self.actor.pos.distance_to(target.pos) <= 15:
-                damage = max(1, self.actor.attack - target.defense)
-                target.hp -= damage
-
-        return True
+            # 충분히 모였으면 공격
+            if len(nearby_lions) + 1 >= self.MIN_LIONS:
+                if self.actor.pos.distance_to(target.pos) <= 15:
+                    damage = max(1, self.actor.attack - target.defense)
+                    target.hp -= damage
+                    return True
+        return False
 class ZEBRA_ALERT(Behaves):
     """
     시력이 좋은 얼룩말이 포식자(Lion, Hyena)를 먼저 발견하면
@@ -308,13 +309,13 @@ class RUNAWAY(Behaves):
         )
 
         if elephant is not None:
-            if elephant.pos.distance_to(self.actor.pos)<30: return False
-            self.actor.move(self.actor.speed*1.2, self.actor.pos+normalize(elephant.pos-self.actor.pos)*3)
+            if elephant.pos.distance_to(self.actor.pos)<40: return False
+            self.actor.move(self.actor.speed*1.2, self.actor.pos+normalize(elephant.pos-self.actor.pos)*self.actor.speed*1.2)
         else:
             # 포식자 반대 방향으로 한 스텝 — move()가 방향+거리 계산하므로
             # 현재 pos에서 충분히 먼 반대 지점을 목표로 넘긴다
-            away = self.actor.pos + normalize(self.actor.pos - predator.pos) * 2
-            self.actor.move(self.actor.speed, away)
+            away = self.actor.pos + normalize(self.actor.pos - predator.pos) * self.actor.speed * 1.3
+            self.actor.move(self.actor.speed*1.3, away)
 
         return True
 
@@ -400,7 +401,7 @@ class ATTACK_LION_WHEN_MANY(Behaves):
         nearby_hyena = world.findtarget(self.actor,Hyena,findrange=self.actor.sight)
         if len(nearby_hyena)+1>=10:
             if self.actor.pos.distance_to(lion_target.pos)>15:
-                self.actor.move(self.actor.speed*1.3, lion_target.pos)
+                self.actor.move(self.actor.speed*1.3, self.actor.pos+normalize(lion_target.pos-self.actor.pos)*self.actor.speed)
             else:
                 damage = max(1, self.actor.attack - lion_target.defense)
                 lion_target.hp -= damage

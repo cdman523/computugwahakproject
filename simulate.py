@@ -21,6 +21,7 @@ class Simulator:
         self.timecount=0
         self.pause=False
         self.grassmap=False
+        self.game_surface = pygame.Surface((1200, 750), pygame.SRCALPHA)
         with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
         self.screen = pygame.display.set_mode((self.fullSCREEN_H,self.fullSCREEN_W))
@@ -41,6 +42,7 @@ class Simulator:
         self.draw_background()
         self.draw_entities()
         self.draw_UI()
+        self.draw_log()
 
     def handle_user_input(self):
         for event in pygame.event.get():
@@ -104,14 +106,16 @@ class Simulator:
         )
 
     def draw_entities(self):
+        self.game_surface.fill((0, 0, 0, 0))
         for e, loc in sorted(self.world.entity_map.items(),key=lambda item:item[0].layer):
             surface = e.surface()
             if surface is None:
                 continue
-            if isinstance(e,Animal):
-                self.draw_bar(e,loc,surface)
             rect=surface.get_rect(center=loc-pygame.Vector2(0,e.radius*0.3)) if isinstance(e,Explosion) else surface.get_rect(center=loc)
-            self.screen.blit(surface, rect)
+            self.game_surface.blit(surface, rect)
+            if isinstance(e,Animal):
+                self.draw_bar(e,loc,e.surface())  
+        self.screen.blit(self.game_surface,(0,0))
     
     def draw_bar(self,entity,pos,surface):
         rect = surface.get_rect(center=pos)
@@ -122,46 +126,48 @@ class Simulator:
         hpratio=entity.hp/entity.maxhp
         hungerratio=entity.hunger/entity.MAXHUNGER
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (40, 40, 40),
         (x, y, width, height)
         )
 
         # 체력
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (255,255,0) if hpratio>0.6 else (255,165,0) if hpratio>0.3 else (255,99,71),
         (x, y, width * hpratio, height)
         )
 
         # 테두리
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (255, 255, 255),
         (x, y, width, height),
         1
         )
 
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (40, 40, 40),
         (x, y+8, width, height)
         )
 
         # 체력
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (160, 110, 60),
         (x, y+8, width * hungerratio, height)
         )
 
         # 테두리
         pygame.draw.rect(
-        self.screen,
+        self.game_surface,
         (255, 255, 255),
         (x, y+8, width, height),
         1
         )
+
+        self.screen.blit(self.game_surface,(0,0))
 
     @staticmethod
     def draw_text(screen,text,x,y,size,color=(255,255,255)):
@@ -190,8 +196,7 @@ class Simulator:
                         rect,
                         1
                     )
-                        
-
+                                   
                     self.draw_text(
                         self.screen,
                         f'{self.world.grass_map[y][x].remain:.2f}',
@@ -199,3 +204,97 @@ class Simulator:
                         rect.y + CELL_SIZE/2-10,
                         10
                     )
+    def draw_log(self):
+
+        # 로그창 영역
+
+        log_x = self.SCREEN_H + 10
+        log_y = 0
+
+        log_w = self.fullSCREEN_H - self.SCREEN_H - 20
+        log_h = self.fullSCREEN_W
+
+        # 배경
+        pygame.draw.rect(
+            self.screen,
+            (25, 25, 25),
+            (log_x, log_y, log_w, log_h)
+        )
+
+        pygame.draw.rect(
+            self.screen,
+            (100, 100, 100),
+            (log_x, log_y, log_w, log_h),
+            2
+        )
+
+        font = pygame.font.SysFont(
+            "malgungothic",
+            12
+        )
+
+        # 로그 읽기
+        try:
+            with open(
+                "log.txt",
+                "r",
+                encoding="utf-8"
+            ) as f:
+                text = f.read()
+
+        except FileNotFoundError:
+            text = ""
+
+        # 줄바꿈 처리
+        lines = []
+
+        for paragraph in text.split("\n"):
+
+            if paragraph == "":
+                lines.append("")
+                continue
+
+            current = ""
+
+            for word in paragraph.split():
+
+                test = (
+                    current + " " + word
+                    if current
+                    else word
+                )
+
+                if font.size(test)[0] < log_w - 10:
+                    current = test
+
+                else:
+                    lines.append(current)
+                    current = word
+
+            lines.append(current)
+
+        # 표시 가능한 줄 수
+        line_height = font.get_linesize()
+
+        max_lines = log_h // line_height
+
+        # 자동 스크롤
+        if len(lines) > max_lines:
+            lines = lines[-max_lines:]
+
+        # 출력
+        for i, line in enumerate(lines):
+
+            surface = font.render(
+                line,
+                True,
+                (220, 220, 220)
+            )
+
+            self.screen.blit(
+                surface,
+                (
+                    log_x + 5,
+                    log_y + i * line_height
+                )
+            )

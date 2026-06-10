@@ -46,7 +46,7 @@ class Buffalo(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            self.IMAGE, (80,80)
+            self.IMAGE, (75,75)
         )
 
 
@@ -128,7 +128,7 @@ class Lion(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            self.IMAGE, (80,80)
+            self.IMAGE, (75,75)
         )
 
 
@@ -183,5 +183,5 @@ class Elephant(Animal):
 
     def surface(self):
         return pygame.transform.scale(
-            self.IMAGE, (90, 90)
+            self.IMAGE, (100,100)
         )
