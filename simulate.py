@@ -25,6 +25,7 @@ class Simulator:
         self.font=pygame.font.SysFont('malgungothic',16)
         self.logpoint=0
         self.game_surface = pygame.Surface((1200, 750), pygame.SRCALPHA)
+        self.hover=None
         with open('log.txt','w',encoding='utf-8'):pass
         pygame.display.set_caption('서우의 ALEPHANT 프로젝트')
         self.screen = pygame.display.set_mode((self.fullSCREEN_H,self.fullSCREEN_W))
@@ -44,6 +45,8 @@ class Simulator:
     def draw(self):
         self.draw_background()
         self.draw_entities()
+        self.hv=self.get_hovered_animal()
+        self.hover=self.hv if self.hv is not None else self.hover
         self.draw_UI()
         self.draw_log()
 
@@ -98,6 +101,11 @@ class Simulator:
                     self.grassmap=not self.grassmap
                 elif event.key==pygame.K_ESCAPE:
                     self.running=False
+            if event.type==pygame.MOUSEWHEEL:
+                if event.y>0:
+                    self.xspeed+=0.5
+                elif event.y<0:
+                    self.xspeed=max(self.xspeed-0.5,0.1)
     def draw_background(self):
         self.screen.fill((80,80,80))
         self.screen.blit(
@@ -176,7 +184,7 @@ class Simulator:
         screen.blit(text_surface, (x, y))
 
     def draw_UI(self):
-        self.draw_text(self.screen,f'{self.xspeed:.2f}배속'+('(일시정지됨)' if self.pause else ''),0,0,30)
+        self.draw_text(self.screen,f'[{self.world.worldtime//3600:02}:{self.world.worldtime%3600//60:02}] {self.xspeed:.2f}배속'+('(일시정지됨)' if self.pause else ''),10,self.fullSCREEN_W-50,30)
         if self.grassmap:
             self.update_grassmap()
             self.screen.blit(
@@ -185,7 +193,11 @@ class Simulator:
             )
         self.draw_text(self.screen,'[esc] 종료 [space] 일시정지 [z] NUCLEAR [x] 로그 지우기 [c] 풀 보이기',0,750,20)
         self.draw_text(self.screen,'[1] Elephant [2] Lion [3] Hyena [4] Buffalo [5] Zebra [6] Gazelle [7] Carcass',0,780,20)
-        self.draw_text(self.screen,'[↑] +0.1배속 [↓] -0.1배속 [→] +1배속 [←] -1배속',0,810,20)
+        self.draw_text(self.screen,'[↑] +0.1배속 [↓] -0.1배속 [→] +1배속 [←] -1배속 [마우스 휠] ±0.5배속씩 조정',0,810,20)
+        if self.hover is not None:
+            self.draw_text(self.screen,f'이름 {self.hover.name} 종 {self.hover.__class__.__name__}',750,750,20)
+            self.draw_text(self.screen,f'체력 {self.hover.hp:.0f}/{self.hover.maxhp:.0f} 배고픔 {self.hover.hunger:.0f}/{self.hover.MAXHUNGER:.0f}',750,780,20)
+            self.draw_text(self.screen,f'속도 {self.hover.speed:.1f} 공격력 {self.hover.attack} 방어력{self.hover.defense} 시야 {self.hover.sight}',750,810,20)
     def draw_log(self):
 
         # 로그창 영역
@@ -340,3 +352,22 @@ class Simulator:
                     text,
                     text_rect
                 )
+    def get_hovered_animal(self):
+        mouse_pos = pygame.mouse.get_pos()
+
+        for entity, pos in reversed(
+            sorted(
+                self.world.entity_map.items(),
+                key=lambda item: item[0].layer
+            )
+        ):
+            if not isinstance(entity, Animal):
+                continue
+
+            surface = entity.surface()
+            rect = surface.get_rect(center=pos)
+
+            if rect.collidepoint(mouse_pos):
+                return entity
+
+        return None

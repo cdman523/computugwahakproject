@@ -28,6 +28,7 @@ class World:
         self.grass_map = [
             [Grass(r.uniform(10, 20)) for _ in range(16)] for _ in range(10)
         ]
+        self.worldtime=0
 
     @property
     def entities(self) -> list[Entity]:
@@ -37,9 +38,10 @@ class World:
         ett = entity(*entity.info(), pos, self)
         self.entity_map[ett] = ett.pos
         if isinstance(ett,Animal):
-            addlog(f'{ett.name}을(를) 소환했습니다.')
+            addlog(self,f'{ett.name}을(를) 소환했습니다.')
 
     def update(self):
+        self.worldtime+=1
         for entity in self.entities:
             if not entity.isdead:
                 for a in entity.habit():
@@ -146,7 +148,7 @@ class Animal(Entity):
             return
         self.isdead=True
         self.world.summon(Carcass, self.pos)
-        addlog(f'{self.name}이(가) 사망했습니다.' if self.attacker is None else f'{self.name}이(가) {self.attacker.name}에 의해 사망했습니다.')
+        addlog(self.world,f'{self.name}이(가) 사망했습니다.' if self.attacker is None else f'{self.name}이(가) {self.attacker.name}에 의해 사망했습니다.')
         self.world.remove(self)
         
 
@@ -199,9 +201,9 @@ class Grass:
         if self.remain>20:
             self.remain=20
 
-def addlog(txt):
+def addlog(world:World,txt):
     with open('log.txt','a',encoding='UTF-8') as f:
-        f.write(f'[{pygame.time.get_ticks()/1000:.2f}] {txt}\n')
+        f.write(f'[{world.worldtime//3600:02}:{world.worldtime%3600//60:02}] {txt}\n')
 
 def normalize(v:pygame.Vector2):
     if v.length_squared()<1e-8:
@@ -216,7 +218,7 @@ class Nuclear(Entity):
         super().__init__(pygame.Vector2(pos.x,-100))
         self.targetpos=pos
         self.world=world
-        addlog('NUCLEAR LAUNCH DETECTED')
+        addlog(self.world,'NUCLEAR LAUNCH DETECTED')
     def fall(self,v):
         self.pos.y+=v
         self.world.entity_map[self].y+=v
@@ -249,7 +251,7 @@ class Explosion(Entity):
         self.mradius=800
         self.alpha=255
         self.name='NUCLEAR'
-        addlog(f'목표 지점 : {pos.x}, {pos.y} 명중')
+        addlog(self.world,f'목표 지점 : {pos.x}, {pos.y} 명중')
     @classmethod
     def info(cls):
         return ()
